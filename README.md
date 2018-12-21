@@ -80,4 +80,7 @@ Face to face meetings will be used mostly, in addition to calls if necessary.
 Each user will work on a separate branch on git and one member will be assigned as an integrator and reviewer for each merge request before merging to master. In addition, peer reviews will be performed to have a 2nd look for bugs/better implementation.
 
 ### Timetable
-
+Below milestones are fixed for the development,testing and deployment of project.
+1. 20.1.2019: Initial template design for frontend. 
+2. 10.2.2019: Full application logic and corresponding changes/improvement in frontend. Security concerns will be handled
+3. 17.2.2019: After full testing deployment on Heroku
