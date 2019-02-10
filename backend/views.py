@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from backend.forms import SignUpForm
 # Create your views here.
 
-@login_required
+@login_required(login_url='login')
 def home(request):
     return render(request, 'home.html')
 
@@ -22,4 +22,4 @@ def signup(request):
             return redirect('home')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'registration/signup.html', {'form': form})
