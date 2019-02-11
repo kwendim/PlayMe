@@ -46,10 +46,18 @@ def upload(request):
 			new_game.save()
 			upload_done = True
 			print(upload_done)
-			return redirect('home')
 		else:
 			print(form.errors)
 	else:
 		form = GameUploadForm()
 		
 	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,  'upload_done':upload_done})
+
+
+def buy(request,game_id):
+	 
+	MEDIA_URL = '/media/'
+	print(game_id)
+	game = Game.objects.get(id = game_id)
+	purchase_number = game.number_of_purchases
+	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game	, 'purchase_number': purchase_number})

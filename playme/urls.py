@@ -25,6 +25,7 @@ from backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
     url(r'^upload/$', views.upload, name='upload'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
