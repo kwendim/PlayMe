@@ -2,21 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Play Me{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel ="stylesheet" type="text/css" href = "{% static 'playme/style.css' %}">
   </head>
   <body>
-    <header>
-      <h1>Play Me</h1>
-      {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">logout</a>
-      {% else %}
-        <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
-      {% endif %}
-      <hr>
-    </header>
-    <main>
-      {% block content %}
-      {% endblock %}
-    </main>
+    <div class="text-center">
+          <header>
+              <div class="top_block">
+                <h1>Play Me</h1>
+              </div>
+            </header>
+            {% include "navbar.html" %}
+      </div>
+          <main class="background.main">
+              {% block content %}
+              {% endblock %}
+          </main>
+      <!-- {% include "footer.html" %} -->
   </body>
 </html>
