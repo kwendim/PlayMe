@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Upload</title>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static '/css/signin.css' %}" rel="stylesheet">
+
+    <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
+
+  </head>
+	<body>
+		<div class = "container">
+			<div class  = "col-md-4"></div>
+			<div class  = "col-md-4">	
+			<h1>UPLOAD</h1>
+			{% if upload_done %}
+		    <strong>thank you for uploading!</strong>
+			<a href="/home">Return to the homepage.</a><br />
+			{% else %}
+			
+			<form id="game_form" method="post" action="/upload/" enctype="multipart/form-data">
+				{% csrf_token %}
+
+        <input  id="gameName"  class="form-control" type="text" name="name" placeholder="Game name" >
+				 <hr>  
+        <input  id="category" class="form-control" type="text" name="category" placeholder="category">
+				 <hr>  
+				 <h4>Description</h4>
+				 <input  id="description" type="text" name="description"  style="height:100px;width:500px;">
+ 				 <hr>  
+				 <input  id="link" class="form-control" type="text" name="link" placeholder="Game Link">
+				 <hr> 
+				 <input  id="price" class="form-control" type="text" name="price" placeholder="price">
+				 <hr>
+				 <h4>Thumbnail</h4>
+						<input  id="thumbnail" type="file" name="thumbnail" placeholder="thumbnail">
+					<hr>
+				<button class="btn  btn-primary btn-block submit" value="submit" type="submit">Upload</button>			
+			</form>
+			
+			{% endif %}
+	        </div>
+	  </div>
+	</body>
+</html>

@@ -32,7 +32,9 @@ class Game(models.Model):
     number_of_purchases = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.now, blank=True)
-    #category ??
+    category   =  models.CharField(max_length = 100)
+    price = models.IntegerField(default=0, blank=True)
+    thumbnail = models.ImageField(upload_to ='thumbnail',blank = True)
 
 class Transaction(models.Model):
     date = models.DateTimeField(default=datetime.now)
