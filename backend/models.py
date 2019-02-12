@@ -36,13 +36,27 @@ class Game(models.Model):
     price = models.IntegerField(default=0, blank=True)
     thumbnail = models.ImageField(upload_to ='thumbnail',blank = True)
 
+
+class TransactionManager(models.Manager):
+    def create(self, payer, payee, game,amount):
+        transaction = self.create(payer=payer, payee= payee, game=game,amount=amount)
+        # do something with the book
+        return transaction
+
 class Transaction(models.Model):
     date = models.DateTimeField(default=datetime.now)
     amount = models.PositiveIntegerField()
     payer = models.ForeignKey(Profile, related_name="Payer", on_delete=models.CASCADE)
     payee = models.ForeignKey(Profile, related_name="Payee", on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    #state ??
+    PENDING = 'PE'
+    CONFIRMED = 'CO'
+    YEAR_IN_SCHOOL_CHOICES = (
+        (PENDING, 'pending'),
+        (CONFIRMED, 'confirmed'),
+    )
+    state =  models.CharField(max_length=9,choices=YEAR_IN_SCHOOL_CHOICES, default=PENDING)
+
 
 class Score(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

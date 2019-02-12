@@ -1,0 +1,21 @@
+{% load static %}
+<html lang = "en">
+	<head>
+	   <meta charset  = "utf-8">
+	   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+	   <meta name = "viewport" content  = "width = divice-width , initial-scale = 1">
+	   <title>PlayMe Game Store</title>
+       <link rel = "stylesheet" href = "{% static 'css/bootstrap.css' %}">
+       <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
+	   <script src= "{% static  'js/jquery-2.1.4.js' %}" ></script>  
+	   <script src= "{% static  'js/bootstrap.js' %}" ></script>
+	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
+	</head>
+	<body>  
+        <h2>transaction id: {{request.GET.pid}}</h2>
+        <h2>transaction reference: {{request.GET.ref}} //Should be added in models</h2>
+        <h2>transaction result: {{request.GET.result}}</h2>
+        <h2>transaction checksum: {{request.GET.checksum}}</h2>
+
+        </body>
+        </html>

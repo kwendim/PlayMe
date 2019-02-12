@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from backend.forms import SignUpForm,GameUploadForm
-from .models import Game,Profile
+from .models import Game,Profile,Transaction
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.conf import settings
-
+from hashlib import md5
 
 # Create your views here
 
@@ -54,10 +54,26 @@ def upload(request):
 	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,  'upload_done':upload_done})
 
 
-def buy(request,game_id):
-	 
+def buy(request,game_id):	 
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
 	purchase_number = game.number_of_purchases
-	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game	, 'purchase_number': purchase_number})
+	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game, 'purchase_number': purchase_number})
+
+
+def payment(request,game_id):
+	purchase_game = Game.objects.get(id = game_id)
+	new_payer = Profile.objects.get(user = request.user)	
+	new_payee=  purchase_game.developer
+	transaction = Transaction.objects.create(payer=new_payer, payee= new_payee, game=purchase_game,amount=purchase_game.price)
+	transaction.save()
+	checksumstr = "pid={}&sid={}&amount={}&token={}".format(transaction.id, settings.SELLER_ID, purchase_game.price, settings.SELLER_KEY)
+	m = md5(checksumstr.encode("ascii"))
+	checksum = m.hexdigest()
+	print(transaction.id, transaction.state, checksumstr)
+	return render(request, 'payment.html', {'game':purchase_game,'SELLER_ID':settings.SELLER_ID, 'MEDIA_URL': settings.MEDIA_URL, 'transaction': transaction, 'checksum': checksum})
+
+def result(request):
+	print(request)
+	return render(request, 'result.html')
