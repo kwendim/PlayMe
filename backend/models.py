@@ -40,7 +40,7 @@ class Game(models.Model):
 class TransactionManager(models.Manager):
     def create(self, payer, payee, game,amount):
         transaction = self.create(payer=payer, payee= payee, game=game,amount=amount)
-        # do something with the book
+        # do something with the transaction
         return transaction
 
 class Transaction(models.Model):
@@ -51,11 +51,11 @@ class Transaction(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     PENDING = 'PE'
     CONFIRMED = 'CO'
-    YEAR_IN_SCHOOL_CHOICES = (
+    TRANSACTION_CHOICES = (
         (PENDING, 'pending'),
         (CONFIRMED, 'confirmed'),
     )
-    state =  models.CharField(max_length=9,choices=YEAR_IN_SCHOOL_CHOICES, default=PENDING)
+    state =  models.CharField(max_length=9,choices=TRANSACTION_CHOICES, default=PENDING)
 
 
 class Score(models.Model):

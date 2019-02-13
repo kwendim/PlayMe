@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    url(r'^mygames/$', views.mygames, name='mygames'),
     url(r'^$', views.home, name='home')
 
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

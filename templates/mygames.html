@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width = divice-width , initial-scale = 1">
-	<title>PlayMe Game Store</title>
+	<title>PlayMe - My Games</title>
 	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 	<script src="{% static  'js/jquery-2.1.4.js' %}"></script>
@@ -76,7 +76,7 @@
 		</div>
 
 		<div class="col-md-10">
-			<h2>All Games</h2>
+			<h2>My Games</h2>
 			<hr>
 			<!-- Tab panes -->
 		</div>
@@ -85,14 +85,14 @@
 	<div class="container container2">
 		<div class="row">
 			<div class="row">
-				{% for game in games %}
+				{% for tr in transactions %}
 				<div class=" col-md-2">
 					<div class="thumbnail">
-						<img class="img-responsive" src="{{MEDIA_URL}}/{{game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
+						<img class="img-responsive" src="{{MEDIA_URL}}/{{tr.game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
 
 						<div class="caption">
-							<h3>{{game.name}}</h3>
-							<p><a href="{% url 'buy' game.id %}" class="btn btn-primary" role="button">Buy </a>
+							<h3>{{tr.game.name}}</h3>
+							<p><a href="{% url 'buy' tr.game.id %}" class="btn btn-primary" role="button">Play </a>
 						</div>
 					</div>
 				</div>
