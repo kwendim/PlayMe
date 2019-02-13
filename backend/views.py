@@ -10,7 +10,6 @@ from hashlib import md5
 
 # Create your views here
 
-@login_required(login_url='login')
 def home(request):
     games = Game.objects.all()
     print(settings.MEDIA_URL)
@@ -62,13 +61,19 @@ def upload(request):
 		
 	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,  'upload_done':upload_done})
 
-@login_required(login_url='login')
 def buy(request,game_id):	 
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
-	purchase_number = game.number_of_purchases
-	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game, 'purchase_number': purchase_number})
+	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game})
+
+@login_required(login_url='login')
+def play(request,game_id):	 
+	MEDIA_URL = '/media/'
+	print(game_id)
+	game = Game.objects.get(id = game_id)
+	return render(request,'play.html',{'MEDIA_URL' : MEDIA_URL,'game':game})
+
 
 @login_required(login_url='login')
 def payment(request,game_id):

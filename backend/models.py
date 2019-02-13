@@ -29,7 +29,7 @@ class Game(models.Model):
     high_score = models.PositiveIntegerField(default=0, blank=True)
     description = models.TextField(blank=True)
     link = models.URLField("game_url")
-    number_of_purchases = models.PositiveIntegerField(default=0, blank=True)
+    purchase_number = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.now, blank=True)
     category   =  models.CharField(max_length = 100)
