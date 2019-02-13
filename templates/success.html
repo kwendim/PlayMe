@@ -33,8 +33,9 @@
 					
 			</div>
 			<hr>
-			<button class="btn btn-default" type="button"> Play </button>       
-
+			<form action="/play/{{game.id}}">
+				<input class="btn btn-default" type="submit" name="play" value="Play"/>       
+			</form>
 			{% endif %}
         </body>
         </html>
