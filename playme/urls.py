@@ -29,11 +29,13 @@ urlpatterns = [
     url(r'^payment/cancel/$', views.payment_cancel, name='cancel'),
     url(r'^payment/error/$', views.payment_error, name='error'),
     url(r'^payment/(?P<game_id>[0-9]+)/$', views.payment, name='pay'),
+    url(r'^play/(?P<game_id>[0-9]+)/$', views.play, name='play'),
     url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
     url(r'^upload/$', views.upload, name='upload'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    url(r'^mygames/$', views.mygames, name='mygames'),
     url(r'^$', views.home, name='home')
 
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

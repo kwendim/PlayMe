@@ -29,7 +29,7 @@ class Game(models.Model):
     high_score = models.PositiveIntegerField(default=0, blank=True)
     description = models.TextField(blank=True)
     link = models.URLField("game_url")
-    number_of_purchases = models.PositiveIntegerField(default=0, blank=True)
+    purchase_number = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.now, blank=True)
     category   =  models.CharField(max_length = 100)
@@ -40,6 +40,7 @@ class Game(models.Model):
 class TransactionManager(models.Manager):
     def create(self, payer, payee, game,amount):
         transaction = self.create(payer=payer, payee= payee, game=game,amount=amount)
+        # do something with the transaction
         return transaction
 
 class Transaction(models.Model):
@@ -50,11 +51,11 @@ class Transaction(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     PENDING = 'PE'
     CONFIRMED = 'CO'
-    TRANSACTION_STATUS = (
+    TRANSACTION_CHOICES = (
         (PENDING, 'pending'),
         (CONFIRMED, 'confirmed'),
     )
-    state =  models.CharField(max_length=9,choices=TRANSACTION_STATUS, default=PENDING)
+    state =  models.CharField(max_length=9,choices=TRANSACTION_CHOICES, default=PENDING)
     reference = models.IntegerField(blank=True, null=True)
 
 
