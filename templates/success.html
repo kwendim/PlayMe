@@ -1,0 +1,40 @@
+{% load static %}
+<html lang = "en">
+	<head>
+	   <meta charset  = "utf-8">
+	   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+	   <meta name = "viewport" content  = "width = divice-width , initial-scale = 1">
+	   <title>PlayMe Game Store</title>
+       <link rel = "stylesheet" href = "{% static 'css/bootstrap.css' %}">
+       <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
+	   <script src= "{% static  'js/jquery-2.1.4.js' %}" ></script>  
+	   <script src= "{% static  'js/bootstrap.js' %}" ></script>
+	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
+	</head>
+	<body>  
+			{% if malformed %}
+				<p>Malformed purchase. Transaction not accepted</p>
+			{% else %}
+
+		
+
+		<div class="container">
+		<div class  = "row">
+			<h2>You have successfully purhcased</h2>
+			<hr>
+			<div class = "col-md-8">	
+				
+				<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+
+			</div>
+				<div class = "col-md-4">				 	    
+					<h1>{{ game.name }}</h1>
+				</div>
+					
+			</div>
+			<hr>
+			<button class="btn btn-default" type="button"> Play </button>       
+
+			{% endif %}
+        </body>
+        </html>

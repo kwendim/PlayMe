@@ -70,10 +70,52 @@ def payment(request,game_id):
 	transaction.save()
 	checksumstr = "pid={}&sid={}&amount={}&token={}".format(transaction.id, settings.SELLER_ID, purchase_game.price, settings.SELLER_KEY)
 	m = md5(checksumstr.encode("ascii"))
-	checksum = m.hexdigest()
+	checksum =   m.hexdigest() 
 	print(transaction.id, transaction.state, checksumstr)
 	return render(request, 'payment.html', {'game':purchase_game,'SELLER_ID':settings.SELLER_ID, 'MEDIA_URL': settings.MEDIA_URL, 'transaction': transaction, 'checksum': checksum})
 
-def result(request):
-	print(request)
-	return render(request, 'result.html')
+def payment_success(request):
+	secret_key = settings.SELLER_KEY
+	pid = request.GET['pid']
+	ref = request.GET['ref']
+	result = request.GET['result']
+	checksumstr = "pid={}&ref={}&result={}&token={}".format(pid, ref, result, secret_key)
+	m = md5(checksumstr.encode("ascii"))
+	checksum = m.hexdigest()
+	malformed = False
+	print("calculated: " + checksum)
+	print("received: " + request.GET['checksum'] )
+	if (checksum == request.GET['checksum'] ):			
+		transaction = Transaction.objects.get(pk=pid)
+		transaction.state = Transaction.CONFIRMED
+		transaction.reference = ref
+		game = transaction.game
+		transaction.save()
+		print("about to call success")
+		return render(request, 'success.html', {'game': game, 'MEDIA_URL': settings.MEDIA_URL, 'malformed': malformed})
+	else: 
+		transaction = Transaction.objects.get(pk=pid)
+		transaction.delete()
+		malformed = True
+		return render(request, 'success.html', {"malformed": malformed})
+		
+
+def payment_cancel(request):
+	transaction = Transaction.objects.get(pk=request.GET['pid'])
+	game = transaction.game
+	transaction.delete()
+	print("about to call redirect")
+	return redirect('/' + str(game.id))
+
+def payment_error(request):
+	try:
+		transaction = Transaction.objects.get(pk=request.GET['pid'])
+		game = transaction.game
+		transaction.delete()
+		return render(request, 'error.html')
+
+	except:
+		return render(request, 'error.html')
+
+
+

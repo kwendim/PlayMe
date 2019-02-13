@@ -12,10 +12,12 @@
 	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
 	</head>
 	<body>  
-        <h2>transaction id: {{request.GET.pid}}</h2>
-        <h2>transaction reference: {{request.GET.ref}} //Should be added in models</h2>
-        <h2>transaction result: {{request.GET.result}}</h2>
-        <h2>transaction checksum: {{request.GET.checksum}}</h2>
+		<div class="container">
+		<div class  = "row">
+			<h2>There was an error in your purchase.</h2>
+            <a href="/">Return to the homepage.</a><br />
+
+
 
         </body>
         </html>
