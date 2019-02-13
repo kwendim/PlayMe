@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
     url(r'^upload/$', views.upload, name='upload'),
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^aboutus/$', views.aboutus, name='aboutus'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     url(r'^$', views.home, name='home')

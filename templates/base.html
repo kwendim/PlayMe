@@ -1,38 +1,44 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Play Me{% endblock %}</title>
-  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  	<title>PlayMe Game Store</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel ="stylesheet" type="text/css" href = "{% static 'playme/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-  	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-  	<script src="{% static  'js/jquery-2.1.4.js' %}"></script>
-  	<script src="{% static  'js/bootstrap.js' %}"></script>
-  	<script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <img class="img-responsive" src="{% static 'img/icon.png'  %}" ,alt="logo">
-        </div>
-        <div class="col-md-6 text-right">
-          <h1>PlayMe<h1>
-        </div>
-      </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Play Me{% endblock %}</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>PlayMe Game Store</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel ="stylesheet" type="text/css" href = "{% static 'playme/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<script src="{% static  'js/jquery-2.1.4.js' %}"></script>
+	<script src="{% static  'js/bootstrap.js' %}"></script>
+	<script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
+</head>
+<body>
+  <div class="text-center">
+  {% include "navbar.html" %}
+  </div>
+  <div class="row">
+    <div class="col-md-2" style = "background-color: PaleTurquoise">
+      <div class="outter"><img src="{% static 'img/chihuahua-dog.jpg'  %}" width="130" height="86" alt=""/></div>
+      <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="/top/">Top Charts</a></li>
+        <li role="presentation"><a href="/new/">New Releases</a></li>
+      </ul>
     </div>
-    <div class="text-center">
-            {% include "navbar.html" %}
-      </div>
-          <main class="background.main">
-              {% block content %}
-              {% endblock %}
-          </main>
-      <!-- {% include "footer.html" %} -->
-  </body>
+    <div class="col-md-10" style = "background-color: Silver">
+      <main style="background:url('img/gaming.jpg') no-repeat center">
+          {% block content %}
+          {% endblock %}
+      </main>
+    </div>
+  </div>
+    <!-- {% include "footer.html" %} -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">CopyRight © Playme Store 2019, all rights reserved.</p>
+    </div>
+  </footer>
+</body>
 </html>

@@ -1,7 +1,8 @@
+{% load static %}
 {% if user.is_authenticated %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
-		<li class="nav-item">
-			<a class="nav-link" href="#">Home</a>
+    <li class="nav-item">
+			<a class="nav-link" href=" {% url 'home' %}">Home</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="#">My Games</a>
@@ -17,11 +18,15 @@
 				<a class="dropdown-item" href="/educational/">Educational</a>
 			</div>
 		</li>
+    <li class="nav-item">
+			<a class="nav-link" href="{% url 'upload' %}">Upload</a>
+		</li>
+
 		<li class="nav-item">
-			<a class="nav-link" href="#">Show leaderboard</a>
+			<a class="nav-link" href="{% url 'upload' %}">Show leaderboard</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">About us</a>
+			<a class="nav-link" href="{% url 'aboutus' %}">About us</a>
 		</li>
     <button class="btn btn-success ml-auto">Search by game</button>
 		<button class="btn btn-outline-success" type="submit">Search</button>

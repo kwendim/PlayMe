@@ -38,10 +38,10 @@ def upload(request):
 	if request.method == 'POST':
 		form = GameUploadForm(request.POST)
 		if form.is_valid():
-			uploader  = Profile.objects.get(user = request.user)		
+			uploader  = Profile.objects.get(user = request.user)
 			new_game = form.save(commit=False)
 			new_game.developer = uploader
-			if 'thumbnail' in request.FILES:				
+			if 'thumbnail' in request.FILES:
 				new_game.thumbnail = request.FILES['thumbnail']
 			new_game.save()
 			upload_done = True
@@ -50,14 +50,17 @@ def upload(request):
 			print(form.errors)
 	else:
 		form = GameUploadForm()
-		
+
 	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,  'upload_done':upload_done})
 
 
 def buy(request,game_id):
-	 
+
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
 	purchase_number = game.number_of_purchases
 	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game	, 'purchase_number': purchase_number})
+
+def aboutus(request):
+    return render(request, 'aboutus.html')

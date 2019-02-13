@@ -1,55 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang = "en">
-	<head>
-	   <meta charset  = "utf-8">
-	   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-	   <meta name = "viewport" content  = "width = divice-width , initial-scale = 1">
-	   <title>PlayMe Game Store</title>
-       <link rel = "stylesheet" href = "{% static 'css/bootstrap.css' %}">
-       <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
-	   <script src= "{% static  'js/jquery-2.1.4.js' %}" ></script>  
-	   <script src= "{% static  'js/bootstrap.js' %}" ></script>
-	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
-	</head>
-	<body>  
+	<body>
 		<div class = "container">
 		<div class  = "row">
-			<div class = "col-md-8">	
-				
+			<div class = "col-md-8">
+
 				<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
 
 			</div>
-				<div class = "col-md-4">				 	    
+				<div class = "col-md-4">
 					<h1>{{ game.name }}</h1>
 				</div>
-				
+
 		</div>
 			<div class = "row"><hr></div>
 				<div class = "row">
 				<div class  = "col-md-3"></div>
 				<div class  = "col-md-5">
-				
+
 				</div>
 
-		
-				 </div>
- 			<div class = "row"> <h1>Descritption</h1></div>
-		    
-		     <div class = "row">
-		    
-		     			
-					<p><h4>{{game.description}}<h4></p>				   
 
-<!-- 			
+				 </div>
+ 			<div class = "row"> <h1>Description</h1></div>
+
+		     <div class = "row">
+
+
+					<p><h4>{{game.description}}<h4></p>
+
+<!--
 		<form id="app_form" method="post" action="/rate/" enctype="multipart/form-data">
 				{% csrf_token %}
-	
+
 			<input  id="discription" type="text" name="discription" placeholder="discription" style="height:200px;width:500px;">
 			    <!-- Provide a button to click to submit the form. -->
-				 <!-- <hr> 
+				 <!-- <hr>
 				<button class="btn  btn-primary btn-block submit" value="submit" type="submit">send</button>
-			
+
 			</form> -->
 
 
@@ -58,13 +47,13 @@
 		     	<div class = "col-md-8"></div>
 				<div class = "col-md-4">
 				<h4> Purchased {{game.purchase_number}}<h4>
-				 
+
 				</div>
 				<div class = "col-md-8"></div>
 				<div class = "col-md-4">
-				   
+
 				   <a href="/payment.html" class="btn btn-primary" role="button">Buy</a>
-									   
+
 									   <!-- Split button -->
 					<!-- <div class="btn-group">
 					  <button type="button" class="btn btn-danger" >Rating<span class="badge">{{app.rating}}</span></button>
@@ -78,13 +67,13 @@
 					    <li><a href="/rating/{{app.id}}/3/">3</a></li>
 					    <li><a href="/rating/{{app.id}}/4/">4</a></li>
 					    <li><a href="/rating/{{app.id}}/5/">5</a></li>
-					    
+
 					  </ul>
 					</div>  -->
-				   
+
 				 </div>
 			 </div>
-			
+
 		 </div>
 	</body>
-</html>
+{% endblock %}
