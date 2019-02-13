@@ -25,8 +25,10 @@ from backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^payment/success/$', views.payment_success, name='success'),
+    url(r'^payment/cancel/$', views.payment_cancel, name='cancel'),
+    url(r'^payment/error/$', views.payment_error, name='error'),
     url(r'^payment/(?P<game_id>[0-9]+)/$', views.payment, name='pay'),
-    url(r'^result/$', views.result, name='result'),
     url(r'^play/(?P<game_id>[0-9]+)/$', views.play, name='play'),
     url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
     url(r'^upload/$', views.upload, name='upload'),

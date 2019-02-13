@@ -56,6 +56,7 @@ class Transaction(models.Model):
         (CONFIRMED, 'confirmed'),
     )
     state =  models.CharField(max_length=9,choices=TRANSACTION_CHOICES, default=PENDING)
+    reference = models.IntegerField(blank=True, null=True)
 
 
 class Score(models.Model):
