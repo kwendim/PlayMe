@@ -70,7 +70,7 @@ def buy(request,game_id):
 	print(game_id)
 	game = Game.objects.get(id = game_id)
 	user_has_bought_game = False
-	check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=game).count() #check if user has already purchased the game
+	check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=game,state=Transaction.CONFIRMED).count() #check if user has already purchased the game
 	is_developers_game = False
 	if (check_if_bought > 0):
 		user_has_bought_game = True
@@ -91,7 +91,7 @@ def play(request,game_id):
 def payment(request,game_id):
 	game = Game.objects.filter(id = game_id)
 	if(game.count() >  0): #check if the game exists
-		check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=Game.objects.get(id=game_id)).count() #check if user has already purchased the game
+		check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=Game.objects.get(id=game_id),state=Transaction.CONFIRMED).count() #check if user has already purchased the game
 		if (check_if_bought):
 			return redirect("/play/" + str(game_id))
 		purchase_game = Game.objects.get(id = game_id)
