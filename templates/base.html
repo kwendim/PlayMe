@@ -1,20 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Play Me{% endblock %}</title>
-    {% load static %}
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<title>PlayMe Game Store</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel ="stylesheet" type="text/css" href = "{% static 'playme/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  	<script src="{% static  'js/jquery-2.1.4.js' %}"></script>
+  	<script src="{% static  'js/bootstrap.js' %}"></script>
+  	<script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
   </head>
   <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img class="img-responsive" src="{% static 'img/icon.png'  %}" ,alt="logo">
+        </div>
+        <div class="col-md-6 text-right">
+          <h1>PlayMe<h1>
+        </div>
+      </div>
+    </div>
     <div class="text-center">
-          <header>
-              <div class="top_block">
-                <h1>Play Me</h1>
-              </div>
-            </header>
             {% include "navbar.html" %}
       </div>
           <main class="background.main">
