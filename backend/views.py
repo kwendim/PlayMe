@@ -43,29 +43,41 @@ def mygames(request):
 @login_required(login_url='login')
 def upload(request):
 	upload_done = False
-	if request.method == 'POST':
-		form = GameUploadForm(request.POST)
-		if form.is_valid():
-			uploader  = Profile.objects.get(user = request.user)		
-			new_game = form.save(commit=False)
-			new_game.developer = uploader
-			if 'thumbnail' in request.FILES:				
-				new_game.thumbnail = request.FILES['thumbnail']
-			new_game.save()
-			upload_done = True
-			print(upload_done)
+	if request.user.profile.is_developer:
+		if request.method == 'POST':
+			form = GameUploadForm(request.POST)
+			if form.is_valid():
+				uploader  = Profile.objects.get(user = request.user)		
+				new_game = form.save(commit=False)
+				new_game.developer = uploader
+				if 'thumbnail' in request.FILES:				
+					new_game.thumbnail = request.FILES['thumbnail']
+				new_game.save()
+				upload_done = True
+				print(upload_done)
+			else:
+				print(form.errors)
 		else:
-			print(form.errors)
+			form = GameUploadForm()
 	else:
-		form = GameUploadForm()
-		
+		return redirect('home')
+			
 	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,  'upload_done':upload_done})
 
+@login_required(login_url='login')
 def buy(request,game_id):	 
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
-	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game})
+	user_has_bought_game = False
+	check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=game).count() #check if user has already purchased the game
+	is_developers_game = False
+	if (check_if_bought > 0):
+		user_has_bought_game = True
+	if (request.user.profile == game.developer):
+			is_developers_game = True
+
+	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game, 'user_has_bought_game': user_has_bought_game, 'is_developers_game':is_developers_game})
 
 @login_required(login_url='login')
 def play(request,game_id):	 
@@ -77,17 +89,26 @@ def play(request,game_id):
 
 @login_required(login_url='login')
 def payment(request,game_id):
-	purchase_game = Game.objects.get(id = game_id)
-	new_payer = Profile.objects.get(user = request.user)	
-	new_payee=  purchase_game.developer
-	transaction = Transaction.objects.create(payer=new_payer, payee= new_payee, game=purchase_game,amount=purchase_game.price)
-	transaction.save()
-	checksumstr = "pid={}&sid={}&amount={}&token={}".format(transaction.id, settings.SELLER_ID, purchase_game.price, settings.SELLER_KEY)
-	m = md5(checksumstr.encode("ascii"))
-	checksum =   m.hexdigest() 
-	print(transaction.id, transaction.state, checksumstr)
-	return render(request, 'payment.html', {'game':purchase_game,'SELLER_ID':settings.SELLER_ID, 'MEDIA_URL': settings.MEDIA_URL, 'transaction': transaction, 'checksum': checksum})
+	game = Game.objects.filter(id = game_id)
+	if(game.count() >  0): #check if the game exists
+		check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=Game.objects.get(id=game_id)).count() #check if user has already purchased the game
+		if (check_if_bought):
+			return redirect("/play/" + str(game_id))
+		purchase_game = Game.objects.get(id = game_id)
+		new_payer = Profile.objects.get(user = request.user)	
+		new_payee=  purchase_game.developer
+		transaction = Transaction.objects.create(payer=new_payer, payee= new_payee, game=purchase_game,amount=purchase_game.price)
+		transaction.save()
+		checksumstr = "pid={}&sid={}&amount={}&token={}".format(transaction.id, settings.SELLER_ID, purchase_game.price, settings.SELLER_KEY)
+		m = md5(checksumstr.encode("ascii"))
+		checksum =   m.hexdigest() 
 
+		print(transaction.id, transaction.state, checksumstr)
+		return render(request, 'payment.html', {'game':purchase_game,'SELLER_ID':settings.SELLER_ID, 'MEDIA_URL': settings.MEDIA_URL, 'transaction': transaction, 'checksum': checksum})
+	else:
+		return redirect('home')
+
+@login_required(login_url='login')
 def payment_success(request):
 	secret_key = settings.SELLER_KEY
 	pid = request.GET['pid']
@@ -113,7 +134,7 @@ def payment_success(request):
 		malformed = True
 		return render(request, 'success.html', {"malformed": malformed})
 		
-
+@login_required(login_url='login')
 def payment_cancel(request):
 	transaction = Transaction.objects.get(pk=request.GET['pid'])
 	game = transaction.game
@@ -121,6 +142,7 @@ def payment_cancel(request):
 	print("about to call redirect")
 	return redirect('/' + str(game.id))
 
+@login_required(login_url='login')
 def payment_error(request):
 	try:
 		transaction = Transaction.objects.get(pk=request.GET['pid'])

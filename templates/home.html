@@ -23,8 +23,10 @@
 			</div>
 
 			<div class="col-md-6 text-right">
+				<p>{{user.profile.user.first_name}}</p>
 				<h1>PlayMe Game<h1>
 				<h4>Store<h4>
+				<a href='/logout'>Logout</a> 
 			</div>
 		</div>
 
@@ -52,6 +54,12 @@
 					</li>
 					<li role="presentation"><a href="/mygames/">My games</a></li>
 					<li role="presentation"><a href="/home/">About us</a></li>
+					{% if user.profile.is_developer%}
+						<li role="presentation"><a href="/upload/">Upload</a></li>
+						<li role="presentation"><a href="/myuploads/">My Uploads</a></li>
+
+					{% endif %}
+
 
 				</ul>
 			</div>
