@@ -66,6 +66,3 @@ class Score(models.Model):
     current_score = models.FloatField(blank=True, null=True)
     current_state = JSONField(blank=True, null=True)
     date = models.DateField(default=datetime.now, blank=True)
-
-    class Meta:
-        unique_together = ('game', 'player',)

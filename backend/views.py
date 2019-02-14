@@ -140,16 +140,8 @@ def submit_score(request, game_id):
 		game = Game.objects.get(id=game_id)
 		profile = Profile.objects.get(user=request.user)
 		new_score = float(request.POST['score'])
-
-		score, created = Score.objects.get_or_create(
-			game=game, 
-			player=profile,
-			defaults={'game': game, 'player': profile, 'date': datetime.now, 
-					'current_score': new_score})
-
-		if not created and score.current_score < new_score:
-			score.current_score = new_score
-			score.save()
+		score = Score(game=game, player=profile, date=datetime.now(), current_score=new_score)
+		score.save()
 		return JsonResponse({'status':'Score submitted successfully!'})
 	except Exception as e:
-		return JsonResponse({'status':str(e)})
+		return JsonResponse({'status': 'Score submitting failed'})
