@@ -151,7 +151,6 @@ def submit_score(request, game_id):
 def save_game(request, game_id):
 	try:
 		game = Game.objects.get(id=game_id)
-		x = x / 0
 		profile = Profile.objects.get(user=request.user)
 		new_state = json.dumps(json.loads(request.body))
 		State.objects.update_or_create(
