@@ -1,11 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.postgres.fields import JSONField
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from datetime import datetime
+from django.utils import timezone
 
 # Create your models here.
 
@@ -32,7 +31,7 @@ class Game(models.Model):
     link = models.URLField("game_url")
     purchase_number = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    date = models.DateField(default=datetime.now, blank=True)
+    date = models.DateField(default=timezone.now, blank=True)
     category   =  models.CharField(max_length = 100)
     price = models.IntegerField(default=0, blank=True)
     thumbnail = models.ImageField(upload_to ='thumbnail',blank = True)
@@ -45,7 +44,7 @@ class TransactionManager(models.Manager):
         return transaction
 
 class Transaction(models.Model):
-    date = models.DateTimeField(default=datetime.now)
+    date = models.DateTimeField(default=timezone.now)
     amount = models.PositiveIntegerField()
     payer = models.ForeignKey(Profile, related_name="Payer", on_delete=models.CASCADE)
     payee = models.ForeignKey(Profile, related_name="Payee", on_delete=models.CASCADE)
@@ -64,5 +63,12 @@ class Score(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     player = models.ForeignKey(Profile, on_delete=models.CASCADE)
     current_score = models.FloatField(blank=True, null=True)
-    current_state = JSONField(blank=True, null=True)
-    date = models.DateField(default=datetime.now, blank=True)
+    date = models.DateTimeField(default=timezone.now, blank=True)
+
+class State(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    player = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    current_state = models.TextField()
+
+    class Meta:
+        unique_together = ('game', 'player')

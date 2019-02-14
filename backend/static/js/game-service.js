@@ -12,6 +12,14 @@ function send_error_msg(gameFrame, err) {
     return;
 }
 
+function send_load_msg(gameFrame, data) {
+    var loadMessage = JSON.parse(data);
+    loadMessage.messageType = "LOAD";
+    gameFrame.contentWindow.postMessage(loadMessage, '*');
+    $('#result').text("Game loaded successfully!");
+    return;
+}
+
 function handle_message(msg, gameFrame, gameDiv) {
     var msgType = msg.messageType;
     switch(msgType) {
@@ -29,6 +37,16 @@ function handle_message(msg, gameFrame, gameDiv) {
             }
             submit_score(gameFrame, msg.score);
             break;
+        case "SAVE":
+            if (msg.gameState == null) {
+                send_error_msg(gameFrame, "No game state specified");
+                return;
+            }
+            save_game(gameFrame, msg.gameState);
+            break;
+        case "LOAD_REQUEST":
+            load_game(gameFrame);
+            break;
         default:
             send_error_msg(gameFrame, "Unknown message");
             break;
@@ -42,6 +60,34 @@ function set_dimensions(gameDiv, gameFrame, width, height) {
     gameFrame.width = width;
 }
 
+function load_game(gameFrame) {
+    $.ajax({
+        url: 'load_game/',
+        type: 'POST',
+        success: function (data) {
+            send_load_msg(gameFrame, data);
+        },
+        error: function() {
+            send_error_msg(gameFrame, "Error: game not loaded.");
+        }
+      });
+}
+
+function save_game(gameFrame, gameState) {
+    $.ajax({
+        url: 'save_game/',
+        data: JSON.stringify({'gameState': gameState}),
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
+            $('#result').text(data['status']);
+        },
+        error: function() {
+            send_error_msg(gameFrame, "Error: game not saved.");
+        }
+      });
+}
+
 function submit_score(gameFrame, score) {
     $.ajax({
         url: 'submit_score/',
@@ -51,9 +97,9 @@ function submit_score(gameFrame, score) {
         dataType: 'json',
         type: 'POST',
         success: function (data) {
-            $('#result').text(data['status']);
+            $('#result').text(data["status"]);
         },
-        failure: function() {
+        error: function() {
             send_error_msg(gameFrame, "Error: score not saved.");
         }
       });

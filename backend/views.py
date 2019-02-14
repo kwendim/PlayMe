@@ -3,13 +3,14 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from backend.forms import SignUpForm,GameUploadForm
-from .models import Game,Profile,Transaction, Score
+from .models import Game,Profile,Transaction, Score, State
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.conf import settings
 from hashlib import md5
 from django.http import JsonResponse
-from datetime import datetime
+from django.utils import timezone
+import json
 
 # Create your views here
 
@@ -140,8 +141,30 @@ def submit_score(request, game_id):
 		game = Game.objects.get(id=game_id)
 		profile = Profile.objects.get(user=request.user)
 		new_score = float(request.POST['score'])
-		score = Score(game=game, player=profile, date=datetime.now(), current_score=new_score)
+		score = Score(game=game, player=profile, date=timezone.now(), current_score=new_score)
 		score.save()
 		return JsonResponse({'status':'Score submitted successfully!'})
 	except Exception as e:
-		return JsonResponse({'status': 'Score submitting failed'})
+		return JsonResponse(status=500)
+
+@csrf_exempt
+def save_game(request, game_id):
+	try:
+		game = Game.objects.get(id=game_id)
+		x = x / 0
+		profile = Profile.objects.get(user=request.user)
+		new_state = json.dumps(json.loads(request.body))
+		State.objects.update_or_create(
+        game=game, player=profile, 
+		defaults={"game": game, "player": profile, "current_state": new_state})
+		return JsonResponse({'status':'Game saved successfully!'})
+	except Exception as e:
+		return JsonResponse(status=500)
+
+@csrf_exempt
+def load_game(request, game_id):
+	try:
+		state = State.objects.filter(game__id=game_id, player__user=request.user).first()
+		return JsonResponse(state.current_state, safe=False)
+	except Exception as e:
+		return JsonResponse(status=500)
