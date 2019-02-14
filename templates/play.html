@@ -11,6 +11,7 @@
 	   <script src= "{% static  'js/jquery-2.1.4.js' %}" ></script>  
 	   <script src= "{% static  'js/bootstrap.js' %}" ></script>
 	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
+	   <script src="{% static '/js/game-service.js' %}"></script>
 	</head>
 	<body>  
 		<div class = "container">
@@ -32,8 +33,11 @@
 			</div>
  			<div class = "row"> <h1>Description</h1></div>
 		    
-		    <div class = "row"><p><h4>{{game.description}}<h4></p></div>
-			<iframe id="gameServiceFrame" src={{game.link}} width="800" height="600"  frameborder="1">
+			<div class = "row"><p><h4>{{game.description}}<h4></p></div>
+			<div id = "game_div" class = "row">
+				<p id="result"></p>
+				<iframe id="game_frame" src={{game.link}} width="800" height="600"  frameborder="1">
+			</div>
 		 </div>
 	</body>
 </html>

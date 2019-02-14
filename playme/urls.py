@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^payment/error/$', views.payment_error, name='error'),
     url(r'^payment/(?P<game_id>[0-9]+)/$', views.payment, name='pay'),
     url(r'^play/(?P<game_id>[0-9]+)/$', views.play, name='play'),
+    url(r'^play/(?P<game_id>[0-9]+)/submit_score/$', views.submit_score, name='submit_score'),
     url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
     url(r'^upload/$', views.upload, name='upload'),
     url(r'^signup/$', views.signup, name='signup'),

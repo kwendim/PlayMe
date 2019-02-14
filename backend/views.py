@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from backend.forms import SignUpForm,GameUploadForm
-from .models import Game,Profile,Transaction
+from .models import Game,Profile,Transaction, Score
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.conf import settings
 from hashlib import md5
+from django.http import JsonResponse
+from datetime import datetime
 
 # Create your views here
 
@@ -131,5 +134,22 @@ def payment_error(request):
 	except:
 		return render(request, 'error.html')
 
+@csrf_exempt
+def submit_score(request, game_id):
+	try:
+		game = Game.objects.get(id=game_id)
+		profile = Profile.objects.get(user=request.user)
+		new_score = float(request.POST['score'])
 
+		score, created = Score.objects.get_or_create(
+			game=game, 
+			player=profile,
+			defaults={'game': game, 'player': profile, 'date': datetime.now, 
+					'current_score': new_score})
 
+		if not created and score.current_score < new_score:
+			score.current_score = new_score
+			score.save()
+		return JsonResponse({'status':'Score submitted successfully!'})
+	except Exception as e:
+		return JsonResponse({'status':str(e)})
