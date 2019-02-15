@@ -8,6 +8,7 @@ function send_error_msg(gameFrame, err) {
         messageType: "ERROR",
         info: err
     };
+    $('#result').text("")
     gameFrame.contentWindow.postMessage(errorMessage, '*');
     return;
 }

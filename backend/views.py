@@ -143,9 +143,9 @@ def submit_score(request, game_id):
 		new_score = float(request.POST['score'])
 		score = Score(game=game, player=profile, date=timezone.now(), current_score=new_score)
 		score.save()
-		return JsonResponse({'status':'Score submitted successfully!'})
+		return JsonResponse(data={'status':'Score submitted successfully!'})
 	except Exception as e:
-		return JsonResponse(status=500)
+		return JsonResponse(data={}, status=500)
 
 @csrf_exempt
 def save_game(request, game_id):
@@ -158,7 +158,7 @@ def save_game(request, game_id):
 		defaults={"game": game, "player": profile, "current_state": new_state})
 		return JsonResponse({'status':'Game saved successfully!'})
 	except Exception as e:
-		return JsonResponse(status=500)
+		return JsonResponse(data={}, status=500)
 
 @csrf_exempt
 def load_game(request, game_id):
@@ -166,4 +166,4 @@ def load_game(request, game_id):
 		state = State.objects.filter(game__id=game_id, player__user=request.user).first()
 		return JsonResponse(state.current_state, safe=False)
 	except Exception as e:
-		return JsonResponse(status=500)
+		return JsonResponse(data={}, status=500)
