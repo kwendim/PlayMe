@@ -62,8 +62,12 @@
 				</div>
 				<div class = "col-md-8"></div>
 				<div class = "col-md-4">
-				   
-				   <a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
+					{% if user_has_bought_game or is_developers_game %}
+					 <a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
+					 {% else %}
+					 <a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
+
+					 {% endif %}
 									   
 									   <!-- Split button -->
 					<!-- <div class="btn-group">

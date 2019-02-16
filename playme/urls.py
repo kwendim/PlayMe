@@ -25,6 +25,8 @@ from backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^developer/dashboard/$', views.developer_dahsboard, name='developer_dashboard'),
+    url(r'^developer/uploads/$', views.developer_uploads, name='developer_uploads'),
     url(r'^payment/success/$', views.payment_success, name='success'),
     url(r'^payment/cancel/$', views.payment_cancel, name='cancel'),
     url(r'^payment/error/$', views.payment_error, name='error'),
@@ -34,6 +36,8 @@ urlpatterns = [
     url(r'^play/(?P<game_id>[0-9]+)/save_game/$', views.save_game, name='save_game'),
     url(r'^play/(?P<game_id>[0-9]+)/load_game/$', views.load_game, name='load_game'),
     url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
+    url(r'^upload/delete/$', views.delete_upload, name='delete'),
+    url(r'^upload/edit/$', views.edit_upload, name='edit'),
     url(r'^upload/$', views.upload, name='upload'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),

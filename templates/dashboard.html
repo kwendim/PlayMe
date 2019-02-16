@@ -58,7 +58,6 @@
 						<li role="presentation"><a href="/upload/">Upload</a></li>
 						<li role="presentation"><a href="/developer/uploads">My Uploads</a></li>
 						<li role="presentation"><a href="developer/dashboard"> Dashboard </a></li>
-
 					{% endif %}
 
 
@@ -84,14 +83,38 @@
 			</ul>
 		</div>
 
-		<div class="col-md-10">
-			<h2>All Games</h2>
+		<div class="col-md-8">
+			<h2>Dashboard</h2>
 			<hr>
+			<div class="list-group">
+				<div class="col-md-2">
+						<img class="img-responsive" src="{{MEDIA_URL}}/{{game.thumbnail}}"" ,alt="logo">
+				</div>
+
+				<div class="col-md-2">
+					<p>{{game.name}}</p>
+					<p>{{game.price}}</p>
+				</div>
+				<div class="col-md-2">
+
+				</div>
+				<div class="col-md-2">
+					<p>{{game.purchas_number}}</p>
+					<p>{{game.rating}}</p>
+					
+				</div>
+				<br>
+	
+
+
+			</div>
+
 			<!-- Tab panes -->
 		</div>
 	</div>
 
-	<div class="container container2">
+
+	<!-- <div class="container container2">
 		<div class="row">
 			<div class="row">
 				{% for game in games %}
@@ -101,7 +124,7 @@
 
 						<div class="caption">
 							<h3>{{game.name}}</h3>
-							<p><a href="{% url 'buy' game.id %}" class="btn btn-primary" role="button">Buy </a>
+							<p><a href="/upload/edit/?&id={{game.id}}" class="btn btn-primary" role="button"> Edit </a>
 						</div>
 					</div>
 				</div>
@@ -109,9 +132,9 @@
 
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="row">
+	<!-- <div class="row">
 		<nav>
 			<ul class="pagination">
 				<li>
@@ -131,5 +154,5 @@
 				</li>
 			</ul>
 		</nav>
-		</dev>
+		</div> -->
 </body>

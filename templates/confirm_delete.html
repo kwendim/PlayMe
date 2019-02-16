@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <h1>Are you sure you want to delete {{ game.name }}?</h1>
+                <form action="/upload/delete/?&id={{game.id}}" method="POST">{% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <a href="{% url 'developer_uploads' %}" class="btn btn-default">No</a>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+{% endblock content %}
