@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from backend.forms import SignUpForm,GameUploadForm
-from .models import Game,Profile,Transaction
+from .models import Game,Profile,Transaction, Score, State
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.conf import settings
 from hashlib import md5
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.utils import timezone
+import json
 
 
 # Create your views here
@@ -197,14 +201,52 @@ def payment_error(request):
 	except:
 		return render(request, 'error.html')
 
+@csrf_exempt
+def submit_score(request, game_id):
+	try:
+		game = Game.objects.get(id=game_id)
+		profile = Profile.objects.get(user=request.user)
+		new_score = float(request.POST['score'])
+		score = Score(game=game, player=profile, date=timezone.now(), current_score=new_score)
+		score.save()
+		return JsonResponse(data={'status':'Score submitted successfully!'})
+	except Exception as e:
+		return JsonResponse(data={}, status=500)
 
 @login_required(login_url='login')
 def developer_uploads(request):
 	games = Game.objects.filter(developer = request.user.profile)
 	print(games)
 	return render(request,'developer_uploads.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+@csrf_exempt
+def save_game(request, game_id):
+	try:
+		game = Game.objects.get(id=game_id)
+		profile = Profile.objects.get(user=request.user)
+		new_state = json.dumps(json.loads(request.body))
+		State.objects.update_or_create(
+        game=game, player=profile, 
+		defaults={"game": game, "player": profile, "current_state": new_state})
+		return JsonResponse({'status':'Game saved successfully!'})
+	except Exception as e:
+		return JsonResponse(data={}, status=500)
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
+
+def leaderboard(request):
+    MEDIA_URL = '/media/'
+    games = Game.objects.all()
+    return render(request, 'leaderboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games})
 
 @login_required(login_url='login')
 def developer_dahsboard(request):
 	games = Game.objects.filter(developer = request.user.profile)
 	return render(request, "dashboard.html", {'MEDIA_URL': settings.MEDIA_URL, 'games': games})
+@csrf_exempt
+def load_game(request, game_id):
+	try:
+		state = State.objects.filter(game__id=game_id, player__user=request.user).first()
+		return JsonResponse(state.current_state, safe=False)
+	except Exception as e:
+		return JsonResponse(data={}, status=500)

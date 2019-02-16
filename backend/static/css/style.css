@@ -7,9 +7,14 @@
 padding-bottom: 10px;
 
 }
+.backgr{
+  background:url('static/img/gaming.jpg') no-repeat center top;
+
+
+}
 body{
 
-background-color:#ffffff; 
+background-color:#ffffff;
 
 
 }
@@ -29,12 +34,12 @@ h1{
 h2{
 
 color: #337ab7;
-	
+
 }
 h3{
 
 color: #337ab7;
-	
+
 }
 h4{
 

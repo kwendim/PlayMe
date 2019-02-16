@@ -1,36 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang = "en">
-	<head>
-	   <meta charset  = "utf-8">
-	   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-	   <meta name = "viewport" content  = "width = divice-width , initial-scale = 1">
-	   <title>PlayMe Game Store</title>
-       <link rel = "stylesheet" href = "{% static 'css/bootstrap.css' %}">
-       <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
-	   <script src= "{% static  'js/jquery-2.1.4.js' %}" ></script>  
-	   <script src= "{% static  'js/bootstrap.js' %}" ></script>
-	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
-	</head>
-	<body>  
-		<div class = "container">
-		<div class  = "row">
-			<div class = "col-md-8">	
-				
-				<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+	<body>
+		<div class="container-fluid container2">
+		    <div class="panel panel-success">
+		      <div class="panel-heading">
+		        <div class="row">
+		          <div class="col-6">
+										<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+								</div>
+								<div class="col-6">
+										<div class="card h-100">
+									    <div class="card-body">
+									      <h4 class="card-title">{{game.name}}</h4>
+									      <p class="card-text">Ratings:{{game.rating}}</p>
+												 <p class="card-text">Description:{{game.description}}</p>
+												  <p class="card-text">Developed by:{{game.developer}}</p>
+									    </div>
+									    <div class="card-footer">
+												<h4> Purchased {{game.purchase_number}}<h4>
+													<p> Game price: {{game.price}}$</p>
+									      <p><a href="/payment.html" class="btn btn-primary" role="button">Buy </a>
+									    </div>
+									  </div>
+									</div>
+		          </div>
+		        </div>
+		      </div>
 
-			</div>
-				<div class = "col-md-4">				 	    
-					<h1>{{ game.name }}</h1>
-				</div>
-				
-		</div>
-			<div class = "row"><hr></div>
-				<div class = "row">
-				<div class  = "col-md-3"></div>
-				<div class  = "col-md-5">
-				
-				</div>
+		      <div class="panel-body table-responsive">
 
 		
 				 </div>
@@ -40,18 +38,6 @@
 		    
 		     			
 					<p><h4>{{game.description}}<h4></p>				   
-
-<!-- 			
-		<form id="app_form" method="post" action="/rate/" enctype="multipart/form-data">
-				{% csrf_token %}
-	
-			<input  id="discription" type="text" name="discription" placeholder="discription" style="height:200px;width:500px;">
-			    <!-- Provide a button to click to submit the form. -->
-				 <!-- <hr> 
-				<button class="btn  btn-primary btn-block submit" value="submit" type="submit">send</button>
-			
-			</form> -->
-
 
 		 </div>
 		     <div class = "row">
@@ -90,5 +76,12 @@
 			 </div>
 			
 		 </div>
+						<div class = "row">
+							<h3>More about this game:</h3>
+								<p class="card-text">Thanks for showing interest in this game.
+									This game has been downloaded by {{game.number_of_purchases}} people and has {{game.rating}} rating.</p>
+									<p>Hope you enjoy playing.</p>
+					 </div>
+		    </div>
 	</body>
-</html>
+{% endblock %}
