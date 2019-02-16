@@ -24,40 +24,24 @@
 			<h1>UPLOAD</h1>
 			{% if upload_done %}
 		    <strong>thank you for uploading!</strong>
-			<a href="/">Return to the homepage.</a><br />
+			<a href="{% url 'developer_uploads' %}">Return to the homepage.</a><br />
 			{% else %}
-			
-			<!-- <form id="game_form" method="post" action="/upload/" enctype="multipart/form-data">
-				{% csrf_token %}
 
-        <input  id="gameName"  class="form-control" type="text" name="name" placeholder="Game name">
-				 <hr>  
-        <input  id="category" class="form-control" type="text" name="category" placeholder="category">
-				 <hr>  
-				 <h4>Description</h4>
-				 <input  id="description" type="text" name="description"  style="height:100px;width:500px;">
- 				 <hr>  
-				 <input  id="link" class="form-control" type="text" name="link" placeholder="Game Link">
-				 <hr> 
-				 <input  id="price" class="form-control" type="text" name="price" placeholder="price">
-				 <hr>
-				 <h4>Thumbnail</h4>
-						<input  id="thumbnail" type="file" name="thumbnail" placeholder="thumbnail">
-					<hr>
-				<button class="btn  btn-primary btn-block submit" value="submit" type="submit">Upload</button>			
-			</form> -->
 				{% if is_edit %}
-				<form action="/test/edit/?&id={{game_id}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+				<form action="/upload/edit/?&id={{game_id}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
 				{% else %}
-				<form action="/upload" method="POST" enctype="multipart/form-data">{% csrf_token %}
+				<form action="/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
 				{% endif %}
 				
 				{{ form.as_p }}		
 					<br>
 					<div class="form-group">
 							<button class="btn btn-primary" type="submit">Save</button>
-							<a href="{% url 'home' %}" class="btn btn-danger">Delete</a>
-							<a href="{% url 'home' %}" class="btn btn-default">Cancel</a>
+							{% if is_edit %}
+							<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
+							{% endif %}
+
+							<a href="{% url 'developer_uploads' %}" class="btn btn-default">Cancel</a>
 					</div>
 			</form>
 

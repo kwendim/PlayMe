@@ -19,7 +19,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<img class="img-responsive" src="{% static 'img/icon.png'  %}" ,alt="logo">
+				<img class="img-responsive" src="{{MEDIA_URL}}/{{game.thumbnail}}" ,alt="logo">
 			</div>
 
 			<div class="col-md-6 text-right">
@@ -57,7 +57,7 @@
 					{% if user.profile.is_developer%}
 						<li role="presentation"><a href="/upload/">Upload</a></li>
 						<li role="presentation"><a href="/developer/uploads">My Uploads</a></li>
-
+						<li role="presentation"><a href="developer/dashboard"> Dashboard </a></li>
 					{% endif %}
 
 
@@ -100,7 +100,7 @@
 
 						<div class="caption">
 							<h3>{{game.name}}</h3>
-							<p><a href="/test/edit/?&id={{game.id}}" class="btn btn-primary" role="button"> Edit </a>
+							<p><a href="/upload/edit/?&id={{game.id}}" class="btn btn-primary" role="button"> Edit </a>
 						</div>
 					</div>
 				</div>

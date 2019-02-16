@@ -95,6 +95,18 @@ def edit_upload(request):
 	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
 		  'upload_done':upload_done, 'is_edit': 'is_edit', "game_id": game_edit_id})
 
+@login_required(login_url='login')
+def delete_upload(request):
+	game_id = request.GET['id']
+	game = Game.objects.get(id = game_id)
+
+	if request.method == 'POST':
+		game.delete()
+		print('game deleted')
+		return redirect('developer_uploads')
+	else:
+		return render(request, 'confirm_delete.html', {'game':game})
+
 
 @login_required(login_url='login')
 def buy(request,game_id):	 
@@ -186,8 +198,13 @@ def payment_error(request):
 		return render(request, 'error.html')
 
 
-login_required(login_url='login')
+@login_required(login_url='login')
 def developer_uploads(request):
 	games = Game.objects.filter(developer = request.user.profile)
 	print(games)
-	return render(request,'developer.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+	return render(request,'developer_uploads.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+
+@login_required(login_url='login')
+def developer_dahsboard(request):
+	games = Game.objects.filter(developer = request.user.profile)
+	return render(request, "dashboard.html", {'MEDIA_URL': settings.MEDIA_URL, 'games': games})
