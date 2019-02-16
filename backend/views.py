@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 import json
 
-
+NUM_OF_SCORES = 3
 # Create your views here
 
 def home(request):
@@ -130,9 +130,22 @@ def buy(request,game_id):
 @login_required(login_url='login')
 def play(request,game_id):	 
 	MEDIA_URL = '/media/'
-	print(game_id)
+
 	game = Game.objects.get(id = game_id)
-	return render(request,'play.html',{'MEDIA_URL' : MEDIA_URL,'game':game})
+	check_if_bought = Transaction.objects.filter(payer = request.user.profile,game__id=game_id,state=Transaction.CONFIRMED).count()
+	if check_if_bought == 0 and request.user.profile != game.developer:
+		games = Game.objects.all()
+		return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+	
+	high_scores = Score.objects.filter(game__id=game_id).prefetch_related('player__user__username').order_by('-current_score').values('player__user__username', 'current_score').distinct()
+	player_scores = Score.objects.filter(game__id=game_id, player__user=request.user).order_by('-current_score').values('current_score').distinct()
+	if len(high_scores) > NUM_OF_SCORES:
+		high_scores = high_scores[:NUM_OF_SCORES]
+	if len(player_scores) > NUM_OF_SCORES:
+		player_scores = player_scores[:NUM_OF_SCORES]
+	
+	
+	return render(request,'play.html',{'MEDIA_URL' : MEDIA_URL,'game':game, 'player_scores':player_scores, 'high_scores':high_scores})
 
 
 @login_required(login_url='login')
@@ -207,7 +220,7 @@ def submit_score(request, game_id):
 		game = Game.objects.get(id=game_id)
 		profile = Profile.objects.get(user=request.user)
 		new_score = float(request.POST['score'])
-		score = Score(game=game, player=profile, date=timezone.now(), current_score=new_score)
+		score = Score(game=game, player=profile, current_score=new_score)
 		score.save()
 		return JsonResponse(data={'status':'Score submitted successfully!'})
 	except Exception as e:

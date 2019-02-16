@@ -15,17 +15,18 @@
 	</head>
 	<body>  
 		<div class = "container">
-		<div class  = "row">
-			<div class = "col-md-8">	
-				
-				<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+			<div class  = "row">
+				<div class = "col-md-8">	
+					
+					<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
 
-			</div>
-				<div class = "col-md-4">				 	    
-					<h1>{{ game.name }}</h1>
 				</div>
-				
-		</div>
+					<div class = "col-md-4">				 	    
+						<h1>{{ game.name }}</h1>
+						<a href="/" class="btn btn-primary" role="button">Back to Home</a>
+					</div>
+					
+			</div>
 			<div class = "row"><hr></div>
 			<div class = "row">
 				<div class  = "col-md-3"></div>
@@ -34,6 +35,31 @@
  			<div class = "row"> <h1>Description</h1></div>
 		    
 			<div class = "row"><p><h4>{{game.description}}<h4></p></div>
+			<div class="row">
+				<table>
+						<caption>High Scores</caption>
+						<tr>
+							<th>Player</th>
+							<th>Score</th>
+						</tr>
+						{% for high_score in high_scores %}
+							<tr>
+								<td>{{high_score.player__user__username}}</td>
+								<td>{{high_score.current_score}}</td>
+							</tr>
+						{% endfor %}
+					</table>
+	
+					<table>
+						<caption>Your Scores</caption>
+						<tr>
+							<th>Score</th>
+						</tr>
+						{% for player_score in player_scores %}
+							<tr><td>{{player_score.current_score}}</td></tr>
+						{% endfor %}
+					</table>
+			</div>
 			<div id = "game_div" class = "row">
 				<p id="result"></p>
 				<iframe id="game_frame" src={{game.link}} width="800" height="600"  frameborder="1">

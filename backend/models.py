@@ -63,7 +63,7 @@ class Score(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     player = models.ForeignKey(Profile, on_delete=models.CASCADE)
     current_score = models.FloatField(blank=True, null=True)
-    date = models.DateTimeField(default=timezone.now, blank=True)
+    #date = models.DateTimeField(default=timezone.now, blank=True)
 
 class State(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
