@@ -7,6 +7,8 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.conf import settings
 from hashlib import md5
+from django.shortcuts import get_object_or_404
+
 
 # Create your views here
 
@@ -28,7 +30,7 @@ def signup(request):
             login(request, user)
             return redirect('home')
     else:
-        form = SignUpForm()
+        form = SignUpForm(initial={'last_name': 'hello'})
     return render(request, 'registration/signup.html', {'form': form})
 
 @login_required(login_url='login')
@@ -42,27 +44,57 @@ def mygames(request):
 
 @login_required(login_url='login')
 def upload(request):
-	upload_done = False
-	if request.user.profile.is_developer:
+	if (request.user.profile.is_developer): #checks if a developer is accessing the upload page
+		upload_done = False
 		if request.method == 'POST':
-			form = GameUploadForm(request.POST)
+			form = GameUploadForm(request.POST, request.FILES)
 			if form.is_valid():
-				uploader  = Profile.objects.get(user = request.user)		
+				uploader  = request.user.profile	
 				new_game = form.save(commit=False)
 				new_game.developer = uploader
-				if 'thumbnail' in request.FILES:				
-					new_game.thumbnail = request.FILES['thumbnail']
 				new_game.save()
 				upload_done = True
-				print(upload_done)
 			else:
 				print(form.errors)
-		else:
-			form = GameUploadForm()
+		else:		
+			form = GameUploadForm()	
+			is_edit = False		
+		
+			
+		return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
+		  'upload_done':upload_done})
+
 	else:
 		return redirect('home')
-			
-	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,  'upload_done':upload_done})
+
+@login_required(login_url='login')
+def edit_upload(request):
+	game_edit_id = request.GET.get('id') 
+	upload_done = False
+	if request.method == 'POST':
+		the_game = get_object_or_404(Game,id = game_edit_id)
+		form = GameUploadForm(request.POST, request.FILES, instance = the_game )
+		print(form)
+		if form.is_valid():
+			form.save()
+			upload_done = True
+		else:
+			print(form.errors)
+	else:
+		game_exits = Game.objects.filter(id= game_edit_id).count()
+		if (game_exits > 0):
+			game = Game.objects.get(id = game_edit_id)
+			form = GameUploadForm(initial = {'name': game.name, 'category': game.category,
+				'description': game.description, 'link':game.link, 'price': game.price})
+			print("hello from edit")
+			is_edit=True
+		else: 
+			return redirect('home')
+	
+	is_edit = True
+	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
+		  'upload_done':upload_done, 'is_edit': 'is_edit', "game_id": game_edit_id})
+
 
 @login_required(login_url='login')
 def buy(request,game_id):	 
@@ -154,4 +186,8 @@ def payment_error(request):
 		return render(request, 'error.html')
 
 
-
+login_required(login_url='login')
+def developer_uploads(request):
+	games = Game.objects.filter(developer = request.user.profile)
+	print(games)
+	return render(request,'developer.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
