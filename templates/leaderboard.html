@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid container2">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-3">
+            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"> </span> Leaderboard </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body table-responsive">
+
+        <ul class="list-unstyled">
+          {% for game in games %}
+        <li class="media">
+        <img class=" align-self-end mr-3" src="{{MEDIA_URL}}/{{game.thumbnail}}" alt="Generic placeholder image">
+        <div class="media-body">
+          <h3 class="mt-0 mb-1">{{game.name}}</h3>
+          <p>Highest score is :{{game.high_score}}</p>
+          <p>Your Score is: TBD</p>
+        </div>
+        </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+    </div>
+    {% endblock %}

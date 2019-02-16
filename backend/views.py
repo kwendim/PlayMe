@@ -231,6 +231,14 @@ def save_game(request, game_id):
 	except Exception as e:
 		return JsonResponse(data={}, status=500)
 
+def aboutus(request):
+    return render(request, 'aboutus.html')
+
+def leaderboard(request):
+    MEDIA_URL = '/media/'
+    games = Game.objects.all()
+    return render(request, 'leaderboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games})
+
 @login_required(login_url='login')
 def developer_dahsboard(request):
 	games = Game.objects.filter(developer = request.user.profile)
