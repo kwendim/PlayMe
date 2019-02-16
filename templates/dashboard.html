@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="list-group">
+  {% for game in games %}
+		<a href="#" class="list-group-item">
+				<div class="media col-md-3">
+						<figure class="pull-left">
+								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+						</figure>
+				</div>
+				<div class="col-md-4">
+						<h4 class="list-group-item-heading pb-3"> {{game.name}} </h4>
+						<p class="list-group-item-text"> {{ game.description }}</p>
+            <p><small> Rating:{{ game.rating}} </small></p>
+						<p><small> No. of purchases:{{ game.number_of_purchases}} </small></p>
+				</div>
+				<div class="col-md-3 pull-left">
+						<div class = "container col-md-12">
+								<div class = "row">
+										<div class="col-md-12 pull-left"><i class="fa fa-check-square"></i> Uploaded on {{game.date}}</div>
+								</div>
+						</div>
+				</div>
+				<div class="col-md-2 text-center">
+						<p><small> Price:{{ game.price}} </small></p>
+						<button type="button" class="btn btn-primary btn-sm btn-block">Edit game </button>
+				</div>
+		</a>
+    {% endfor %}
+</div>
+{% endblock %}

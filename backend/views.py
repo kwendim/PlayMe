@@ -64,3 +64,13 @@ def buy(request,game_id):
 
 def aboutus(request):
     return render(request, 'aboutus.html')
+
+def leaderboard(request):
+    MEDIA_URL = '/media/'
+    games = Game.objects.all()
+    return render(request, 'leaderboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games})
+
+def dashboard(request):
+    MEDIA_URL = '/media/'
+    games = Game.objects.all()
+    return render(request, 'dashboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games})
