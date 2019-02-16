@@ -107,7 +107,7 @@ def delete_upload(request):
 	if request.method == 'POST':
 		game.delete()
 		print('game deleted')
-		return redirect('developer_uploads')
+		return redirect('developer_dashboard')
 	else:
 		return render(request, 'confirm_delete.html', {'game':game})
 
@@ -213,11 +213,6 @@ def submit_score(request, game_id):
 	except Exception as e:
 		return JsonResponse(data={}, status=500)
 
-@login_required(login_url='login')
-def developer_uploads(request):
-	games = Game.objects.filter(developer = request.user.profile)
-	print(games)
-	return render(request,'developer_uploads.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 @csrf_exempt
 def save_game(request, game_id):
 	try:

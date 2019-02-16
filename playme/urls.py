@@ -26,7 +26,6 @@ from backend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^developer/dashboard/$', views.developer_dahsboard, name='developer_dashboard'),
-    url(r'^developer/uploads/$', views.developer_uploads, name='developer_uploads'),
     url(r'^payment/success/$', views.payment_success, name='success'),
     url(r'^payment/cancel/$', views.payment_cancel, name='cancel'),
     url(r'^payment/error/$', views.payment_error, name='error'),

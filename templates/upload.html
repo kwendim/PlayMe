@@ -8,7 +8,7 @@
 			<h1>UPLOAD</h1>
 			{% if upload_done %}
 		    <strong>thank you for uploading!</strong>
-			<a href="{% url 'developer_uploads' %}">Return to the homepage.</a><br />
+			<a href="{% url 'developer_dashboard' %}">Return to the homepage.</a><br />
 			{% else %}
 
 				{% if is_edit %}
@@ -24,8 +24,7 @@
 							{% if is_edit %}
 							<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
 							{% endif %}
-
-							<a href="{% url 'developer_uploads' %}" class="btn btn-default">Cancel</a>
+							<a href="{% url 'developer_dashboard' %}" class="btn btn-default">Cancel</a>
 					</div>
 			</form>
 
