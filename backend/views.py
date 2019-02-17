@@ -72,5 +72,5 @@ def leaderboard(request):
 
 def dashboard(request):
     MEDIA_URL = '/media/'
-    games = Game.objects.all()
+    games = Game.objects.filter(developer= request.user.profile)
     return render(request, 'dashboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games})
