@@ -12,6 +12,8 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.utils import timezone
 import json
+from django.template.defaulttags import register
+
 
 
 # Create your views here
@@ -236,14 +238,32 @@ def aboutus(request):
     return render(request, 'aboutus.html')
 
 def leaderboard(request):
-    MEDIA_URL = '/media/'
-    games = Game.objects.all()
-    return render(request, 'leaderboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games})
+	MEDIA_URL = '/media/'
+	games = Game.objects.all()
+	user_high_scores  = []
+	game_high_scores = []
+	new = {}
+	for game in games:
+		game_intermediate_high = Score.objects.filter(game = game.id).order_by('-current_score').values('game__name', 'player__user__username', 'current_score')[:1]
+		if (game_intermediate_high.count() > 0):
+			game_high_scores.append(game_intermediate_high)
+
+		user_intermediate_high = Score.objects.filter(game=game.id, player = request.user.profile).order_by('-current_score').values('player__user__username','game__name', 'current_score').distinct()[:1]
+		if (user_intermediate_high.count() > 0):
+			user_high_scores.append(user_intermediate_high)
+		
+	# for e in game_high_scores:
+	# 	print(list(e)[0].get('current_score'))
+	#print(games)
+	#print('user_high_socres', user_high_scores)
+	#print('game_high_scores', game_high_scores)
+	return render(request, 'leaderboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games, 'user_high_scores': user_high_scores, 'game_high_scores': game_high_scores})
 
 @login_required(login_url='login')
 def developer_dahsboard(request):
 	games = Game.objects.filter(developer = request.user.profile)
 	return render(request, "dashboard.html", {'MEDIA_URL': settings.MEDIA_URL, 'games': games})
+
 @csrf_exempt
 def load_game(request, game_id):
 	try:
@@ -251,3 +271,12 @@ def load_game(request, game_id):
 		return JsonResponse(state.current_state, safe=False)
 	except Exception as e:
 		return JsonResponse(data={}, status=500)
+
+
+@register.filter
+def get_item(query, key):
+	for element in query:
+		if (list(element)[0].get('game__name') == key):
+			return list(element)[0].get('current_score')
+
+	return None

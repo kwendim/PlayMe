@@ -19,8 +19,8 @@
         <img class=" align-self-end mr-3" src="{{MEDIA_URL}}/{{game.thumbnail}}" alt="Generic placeholder image">
         <div class="media-body">
           <h3 class="mt-0 mb-1">{{game.name}}</h3>
-          <p>Highest score is :{{game.high_score}}</p>
-          <p>Your Score is: TBD</p>
+          <p>Highest score is: {{game_high_scores|get_item:game.name}}</p>
+          <p>Your Score is: {{user_high_scores|get_item:game.name}}</p>
         </div>
         </li>
           {% endfor %}
