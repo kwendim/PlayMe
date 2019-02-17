@@ -265,6 +265,9 @@ def submit_score(request, game_id):
 
 @login_required(login_url='login')
 def developer_uploads(request):
+	if not request.user.profile.is_developer:
+		games = Game.objects.all()
+		return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 	games = Game.objects.filter(developer = request.user.profile)
 	print(games)
 	return render(request,'developer_uploads.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
@@ -292,6 +295,9 @@ def leaderboard(request):
 
 @login_required(login_url='login')
 def developer_dahsboard(request):
+	if not request.user.profile.is_developer:
+		games = Game.objects.all()
+		return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 	games = Game.objects.filter(developer = request.user.profile)
 	return render(request, "dashboard.html", {'MEDIA_URL': settings.MEDIA_URL, 'games': games})
 @csrf_exempt
