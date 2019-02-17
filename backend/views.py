@@ -148,18 +148,19 @@ def delete_upload(request):
 		return render(request, 'confirm_delete.html', {'game':game})
 
 
-@login_required(login_url='login')
+
 def buy(request,game_id):	 
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
 	user_has_bought_game = False
-	check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=game,state=Transaction.CONFIRMED).count() #check if user has already purchased the game
 	is_developers_game = False
-	if (check_if_bought > 0):
-		user_has_bought_game = True
-	if (request.user.profile == game.developer):
-			is_developers_game = True
+	if request.user.is_authenticated:
+		check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=game,state=Transaction.CONFIRMED).count() #check if user has already purchased the game
+		if (check_if_bought > 0):
+			user_has_bought_game = True
+		if (request.user.profile == game.developer):
+				is_developers_game = True
 
 	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game, 'user_has_bought_game': user_has_bought_game, 'is_developers_game':is_developers_game})
 
@@ -171,7 +172,7 @@ def play(request,game_id):
 	check_if_bought = Transaction.objects.filter(payer = request.user.profile,game__id=game_id,state=Transaction.CONFIRMED).count()
 	if check_if_bought == 0 and request.user.profile != game.developer:
 		games = Game.objects.all()
-		return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+		return redirect('home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 	
 	high_scores = Score.objects.filter(game__id=game_id).prefetch_related('player__user__username').order_by('-current_score').values('player__user__username', 'current_score').distinct()
 	player_scores = Score.objects.filter(game__id=game_id, player__user=request.user).order_by('-current_score').values('current_score').distinct()
@@ -186,10 +187,10 @@ def play(request,game_id):
 
 @login_required(login_url='login')
 def payment(request,game_id):
-	game = Game.objects.filter(id = game_id)
-	if(game.count() >  0): #check if the game exists
+	game = Game.objects.get(id = game_id)
+	if(game is not None): #check if the game exists
 		check_if_bought = Transaction.objects.filter(payer = request.user.profile,game=Game.objects.get(id=game_id),state=Transaction.CONFIRMED).count() #check if user has already purchased the game
-		if (check_if_bought):
+		if check_if_bought > 0 or game.developer == request.user.profile:
 			return redirect("/play/" + str(game_id))
 		purchase_game = Game.objects.get(id = game_id)
 		new_payer = Profile.objects.get(user = request.user)	
@@ -267,12 +268,13 @@ def developer_uploads(request):
 	games = Game.objects.filter(developer = request.user.profile)
 	print(games)
 	return render(request,'developer_uploads.html',{'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+
 @csrf_exempt
 def save_game(request, game_id):
 	try:
 		game = Game.objects.get(id=game_id)
 		profile = Profile.objects.get(user=request.user)
-		new_state = json.dumps(json.loads(request.body))
+		new_state = request.body.decode('utf-8')
 		State.objects.update_or_create(
         game=game, player=profile, 
 		defaults={"game": game, "player": profile, "current_state": new_state})
