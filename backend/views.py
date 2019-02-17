@@ -34,8 +34,8 @@ def signup(request):
 		form = SignUpForm(request.POST)
 		if form.is_valid():
 			user = form.save()
+			user.refresh_from_db()
 			user.is_active = False
-			user.refresh_from_db()  # load the profile instance created by the signal
 			user.profile.is_developer = form.cleaned_data.get('is_developer')
 			user.save()
 			current_site = get_current_site(request)
