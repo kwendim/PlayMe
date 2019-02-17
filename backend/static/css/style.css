@@ -1,17 +1,12 @@
 .container2 {
-  width: 800px !important;
+  width: 600px !important;
 }
 .row{
-
 
 padding-bottom: 10px;
 
 }
-.backgr{
-  background:url('static/img/gaming.jpg') no-repeat center top;
 
-
-}
 body{
 
 background-color:#ffffff;

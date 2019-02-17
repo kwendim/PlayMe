@@ -14,24 +14,25 @@
           <div style="padding-top:30px" class="panel-body" >
               <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
               <form class="form-horizontal" method="post">
-                      <div style="margin-top:10px" class="form-group" >
-                            {% csrf_token %}
-                            {{ form.as_p }}
+                    <div style="margin-top:10px" class="form-group" >
+                          {% csrf_token %}
+                          {{ form.as_p }}
                           <div class="col-sm-12 controls">
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+                              <button type="submit" class="btn btn-primary">Login</button>
+                              <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
                           </div>
-                      </div>
-                      <div class="form-group">
+                    </div>
+                    <div class="form-group">
                           <div class="col-md-12 control">
                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                 Don't have an account!<a href="{% url 'signup' %}">  Sign Up Here </a>
                             </div>
                           </div>
-                      </div>
-                  </form>
-            </div>
+                    </div>
+              </form>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </body>

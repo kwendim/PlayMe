@@ -45,7 +45,7 @@ def mygames(request):
 		payer__user=request.user,
 		state=Transaction.CONFIRMED
 	).select_related('game')
-	
+
 	return render(request, 'mygames.html', {'transactions': transactions, 'MEDIA_URL': settings.MEDIA_URL})
 
 @login_required(login_url='login')
@@ -55,18 +55,18 @@ def upload(request):
 		if request.method == 'POST':
 			form = GameUploadForm(request.POST, request.FILES)
 			if form.is_valid():
-				uploader  = request.user.profile	
+				uploader  = request.user.profile
 				new_game = form.save(commit=False)
 				new_game.developer = uploader
 				new_game.save()
 				upload_done = True
 			else:
 				print(form.errors)
-		else:		
-			form = GameUploadForm()	
-			is_edit = False		
-		
-			
+		else:
+			form = GameUploadForm()
+			is_edit = False
+
+
 		return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
 		  'upload_done':upload_done})
 
@@ -75,7 +75,7 @@ def upload(request):
 
 @login_required(login_url='login')
 def edit_upload(request):
-	game_edit_id = request.GET.get('id') 
+	game_edit_id = request.GET.get('id')
 	upload_done = False
 	if(request.user.profile == Game.objects.get(id = game_edit_id).developer):
 		if request.method == 'POST':
@@ -95,13 +95,13 @@ def edit_upload(request):
 					'description': game.description, 'link':game.link, 'price': game.price})
 				print("hello from edit")
 				is_edit=True
-			else: 
+			else:
 				return redirect('home')
-		
+
 		is_edit = True
 		return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
 			'upload_done':upload_done, 'is_edit': 'is_edit', "game_id": game_edit_id})
-	else: 
+	else:
 		return redirect('home')
 
 @login_required(login_url='login')
@@ -118,7 +118,7 @@ def delete_upload(request):
 
 
 @login_required(login_url='login')
-def buy(request,game_id):	 
+def buy(request,game_id):
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
@@ -133,7 +133,7 @@ def buy(request,game_id):
 	return render(request,'buy.html',{'MEDIA_URL' : MEDIA_URL,'game':game, 'user_has_bought_game': user_has_bought_game, 'is_developers_game':is_developers_game})
 
 @login_required(login_url='login')
-def play(request,game_id):	 
+def play(request,game_id):
 	MEDIA_URL = '/media/'
 	print(game_id)
 	game = Game.objects.get(id = game_id)
@@ -148,13 +148,13 @@ def payment(request,game_id):
 		if (check_if_bought):
 			return redirect("/play/" + str(game_id))
 		purchase_game = Game.objects.get(id = game_id)
-		new_payer = Profile.objects.get(user = request.user)	
+		new_payer = Profile.objects.get(user = request.user)
 		new_payee=  purchase_game.developer
 		transaction = Transaction.objects.create(payer=new_payer, payee= new_payee, game=purchase_game,amount=purchase_game.price)
 		transaction.save()
 		checksumstr = "pid={}&sid={}&amount={}&token={}".format(transaction.id, settings.SELLER_ID, purchase_game.price, settings.SELLER_KEY)
 		m = md5(checksumstr.encode("ascii"))
-		checksum =   m.hexdigest() 
+		checksum =   m.hexdigest()
 
 		print(transaction.id, transaction.state, checksumstr)
 		return render(request, 'payment.html', {'game':purchase_game,'SELLER_ID':settings.SELLER_ID, 'MEDIA_URL': settings.MEDIA_URL, 'transaction': transaction, 'checksum': checksum})
@@ -173,7 +173,7 @@ def payment_success(request):
 	malformed = False
 	print("calculated: " + checksum)
 	print("received: " + request.GET['checksum'] )
-	if (checksum == request.GET['checksum'] ):			
+	if (checksum == request.GET['checksum'] ):
 		transaction = Transaction.objects.get(pk=pid)
 		transaction.state = Transaction.CONFIRMED
 		transaction.reference = ref
@@ -184,12 +184,12 @@ def payment_success(request):
 		game.save()
 		print("about to call success")
 		return render(request, 'success.html', {'game': game, 'MEDIA_URL': settings.MEDIA_URL, 'malformed': malformed})
-	else: 
+	else:
 		transaction = Transaction.objects.get(pk=pid)
 		transaction.delete()
 		malformed = True
 		return render(request, 'success.html', {"malformed": malformed})
-		
+
 @login_required(login_url='login')
 def payment_cancel(request):
 	transaction = Transaction.objects.get(pk=request.GET['pid'])
@@ -228,7 +228,7 @@ def save_game(request, game_id):
 		profile = Profile.objects.get(user=request.user)
 		new_state = json.dumps(json.loads(request.body))
 		State.objects.update_or_create(
-        game=game, player=profile, 
+        game=game, player=profile,
 		defaults={"game": game, "player": profile, "current_state": new_state})
 		return JsonResponse({'status':'Game saved successfully!'})
 	except Exception as e:
@@ -251,7 +251,7 @@ def leaderboard(request):
 		user_intermediate_high = Score.objects.filter(game=game.id, player = request.user.profile).order_by('-current_score').values('player__user__username','game__name', 'current_score').distinct()[:1]
 		if (user_intermediate_high.count() > 0):
 			user_high_scores.append(user_intermediate_high)
-		
+
 	# for e in game_high_scores:
 	# 	print(list(e)[0].get('current_score'))
 	#print(games)

@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<body>
-	<div class="container container2">
 			<div class="row text-center">
 					{% for game in games %}
 					<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4">
@@ -14,12 +12,10 @@
 					    </div>
 					    <div class="card-footer">
 								<p><a href="/{{game.id}}/" class="btn btn-primary" role="button">More info </a>
-									
+
 					    </div>
 					  </div>
 					</div>
 					{% endfor %}
 			</div>
-		</div>
-</body>
 {% endblock %}
