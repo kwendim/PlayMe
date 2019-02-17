@@ -75,29 +75,32 @@ def upload(request):
 def edit_upload(request):
 	game_edit_id = request.GET.get('id') 
 	upload_done = False
-	if request.method == 'POST':
-		the_game = get_object_or_404(Game,id = game_edit_id)
-		form = GameUploadForm(request.POST, request.FILES, instance = the_game )
-		print(form)
-		if form.is_valid():
-			form.save()
-			upload_done = True
+	if(request.user.profile == Game.objects.get(id = game_edit_id).developer):
+		if request.method == 'POST':
+			the_game = get_object_or_404(Game,id = game_edit_id)
+			form = GameUploadForm(request.POST, request.FILES, instance = the_game )
+			print(form)
+			if form.is_valid():
+				form.save()
+				upload_done = True
+			else:
+				print(form.errors)
 		else:
-			print(form.errors)
-	else:
-		game_exits = Game.objects.filter(id= game_edit_id).count()
-		if (game_exits > 0):
-			game = Game.objects.get(id = game_edit_id)
-			form = GameUploadForm(initial = {'name': game.name, 'category': game.category,
-				'description': game.description, 'link':game.link, 'price': game.price})
-			print("hello from edit")
-			is_edit=True
-		else: 
-			return redirect('home')
-	
-	is_edit = True
-	return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
-		  'upload_done':upload_done, 'is_edit': 'is_edit', "game_id": game_edit_id})
+			game_exits = Game.objects.filter(id= game_edit_id).count()
+			if (game_exits > 0):
+				game = Game.objects.get(id = game_edit_id)
+				form = GameUploadForm(initial = {'name': game.name, 'category': game.category,
+					'description': game.description, 'link':game.link, 'price': game.price})
+				print("hello from edit")
+				is_edit=True
+			else: 
+				return redirect('home')
+		
+		is_edit = True
+		return render(request, 'upload.html',{'form': form, 'MEDIA_URL': settings.MEDIA_URL,
+			'upload_done':upload_done, 'is_edit': 'is_edit', "game_id": game_edit_id})
+	else: 
+		return redirect('home')
 
 @login_required(login_url='login')
 def delete_upload(request):
@@ -172,8 +175,11 @@ def payment_success(request):
 		transaction = Transaction.objects.get(pk=pid)
 		transaction.state = Transaction.CONFIRMED
 		transaction.reference = ref
-		game = transaction.game
+		game = Game.objects.get(id = transaction.game.id)
 		transaction.save()
+		inc_purchase = game.purchase_number + 1
+		game.purchase_number = inc_purchase
+		game.save()
 		print("about to call success")
 		return render(request, 'success.html', {'game': game, 'MEDIA_URL': settings.MEDIA_URL, 'malformed': malformed})
 	else: 
