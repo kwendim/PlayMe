@@ -35,7 +35,7 @@ class Game(models.Model):
     date = models.DateField(default=timezone.now, blank=True)
     category   =  models.CharField(max_length = 100)
     price = models.IntegerField(default=0, blank=True)
-    thumbnail = models.ImageField(upload_to ='thumbnail',blank = True)
+    thumbnail = models.ImageField(default='def.jpg', upload_to ='thumbnail', blank = True)
 
 
 class TransactionManager(models.Manager):

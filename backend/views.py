@@ -19,12 +19,15 @@ from django.utils import timezone
 import json
 
 NUM_OF_SCORES = 3
+SESSION_EXPIRY_TIME = 900
 # Create your views here
 
 def home(request):
-    games = Game.objects.all()
-    print(settings.MEDIA_URL)
-    return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+	games = Game.objects.all()
+	print(settings.MEDIA_URL)
+	if 'login' in request.META.get('HTTP_REFERER'):
+		request.session.set_expiry(SESSION_EXPIRY_TIME)
+	return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
 def signup(request):
 	if request.user.is_authenticated:
