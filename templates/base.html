@@ -1,41 +1,33 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Play Me{% endblock %}</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>PlayMe Game Store</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-  <link rel ="stylesheet" type="text/css" href = "{% static 'playme/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<script src="{% static  'js/jquery-2.1.4.js' %}"></script>
-	<script src="{% static  'js/bootstrap.js' %}"></script>
-	<script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
-</head>
-<body>
-  <div class = "container-fluid">
-  {% include "navbar.html" %}
-  <div class="row">
-    <div class="col-md-1" style = "background-color: Silver">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>{% block title %}PlayMe Game Store{% endblock %}</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+      <link rel ="stylesheet" type="text/css" href = "{% static 'playme/style.css' %}">
+      <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    	<script src="{% static  'js/jquery-2.1.4.js' %}"></script>
+    	<script src="{% static  'js/bootstrap.js' %}"></script>
+    	<script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
+  </head>
+  <body>
+      {% include "navbar.html" %}
+      <div class="row" style = "background-color: Silver">
+      </div>
 
-    </div>
-    <div class="col-md-10" style = "background-color: Silver">
-          {% block content %}
-          {% endblock %}
-    </div>
-    <div class="col-md-1" style = "background-color: Silver">
-    </div>
-  </div>
-    <!-- {% include "footer.html" %} -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class=" text-center text-white">CopyRight © Playme Store 2019, all rights reserved.</p>
-    </div>
-  </footer>
-</div>
-</body>
+      <div class="row "  style = "background-color: Silver">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-10" >
+                {% block content %}
+                {% endblock %}
+          </div>
+          <div class="col-md-1" >
+          </div>
+      </div>
+      {% include "footer.html" %}
+  </body>
 </html>

@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-	<body>
-		<div class="container-fluid container2">
 		    <div class="panel panel-success">
 		      <div class="panel-heading">
 		        <div class="row">
@@ -13,14 +11,19 @@
 										<div class="card h-100">
 									    <div class="card-body">
 									      <h4 class="card-title">{{game.name}}</h4>
-									      <p class="card-text">Ratings:{{game.rating}}</p>
 												 <p class="card-text">Description:{{game.description}}</p>
-												  <p class="card-text">Developed by:{{game.developer}}</p>
+												  <p class="card-text">Developed by:  {{game.developer.user.username}}</p>
 									    </div>
 									    <div class="card-footer">
-												<h4> Purchased {{game.purchase_number}}<h4>
+												<h4> Purchased: {{game.purchase_number}}<h4>
 													<p> Game price: {{game.price}}$</p>
-									      <p><a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy </a>
+													{% if user_has_bought_game or is_developers_game %}
+													<a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
+													{% else %}
+													<a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
+							 
+													{% endif %}
+																		
 									    </div>
 									  </div>
 									</div>
@@ -32,29 +35,7 @@
 
 		
 				 </div>
- 			<div class = "row"> <h1>Description</h1></div>
-		    
-		     <div class = "row">
-		    
-		     			
-					<p><h4>{{game.description}}<h4></p>				   
-
-		 </div>
-		     <div class = "row">
-		     	<div class = "col-md-8"></div>
-				<div class = "col-md-4">
-				<h4> Purchased {{game.purchase_number}}<h4>
-				 
-				</div>
-				<div class = "col-md-8"></div>
-				<div class = "col-md-4">
-					{% if user_has_bought_game or is_developers_game %}
-					 <a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
-					 {% else %}
-					 <a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
-
-					 {% endif %}
-									   
+ 	
 									   <!-- Split button -->
 					<!-- <div class="btn-group">
 					  <button type="button" class="btn btn-danger" >Rating<span class="badge">{{app.rating}}</span></button>
@@ -76,12 +57,6 @@
 			 </div>
 			
 		 </div>
-						<div class = "row">
-							<h3>More about this game:</h3>
-								<p class="card-text">Thanks for showing interest in this game.
-									This game has been downloaded by {{game.number_of_purchases}} people and has {{game.rating}} rating.</p>
-									<p>Hope you enjoy playing.</p>
-					 </div>
+
 		    </div>
-	</body>
 {% endblock %}

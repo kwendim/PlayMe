@@ -3,12 +3,12 @@
 {% load static %}
 	<body>
 		<div class = "container">
-			<div class  = "col-md-4"></div>
+			<div class  = "col-md-3"></div>
 			<div class  = "col-md-4">
 			<h1>UPLOAD</h1>
 			{% if upload_done %}
-		    <strong>thank you for uploading!</strong>
-			<a href="{% url 'developer_uploads' %}">Return to the homepage.</a><br />
+		    <strong>Thanks for uploading!</strong>
+			<a href="{% url 'developer_dashboard' %}">Return to My Uploads</a><br />
 			{% else %}
 
 				{% if is_edit %}
@@ -16,20 +16,19 @@
 				{% else %}
 				<form action="/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
 				{% endif %}
-				
-				{{ form.as_p }}		
+
+				{{ form.as_p }}
 					<br>
 					<div class="form-group">
 							<button class="btn btn-primary" type="submit">Save</button>
 							{% if is_edit %}
 							<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
 							{% endif %}
-
-							<a href="{% url 'developer_uploads' %}" class="btn btn-default">Cancel</a>
+							<a href="{% url 'developer_dashboard' %}" class="btn btn-default">Cancel</a>
 					</div>
 			</form>
 
-				
+
 			{% endif %}
 	        </div>
 		</div>

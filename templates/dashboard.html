@@ -6,14 +6,13 @@
 		<a href="#" class="list-group-item">
 				<div class="media col-md-3">
 						<figure class="pull-left">
-								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" 	,alt = "logo">
 						</figure>
 				</div>
 				<div class="col-md-4">
 						<h4 class="list-group-item-heading pb-3"> {{game.name}} </h4>
 						<p class="list-group-item-text"> {{ game.description }}</p>
-            <p><small> Rating:{{ game.rating}} </small></p>
-						<p><small> No. of purchases:{{ game.number_of_purchases}} </small></p>
+						<p><small> No. of purchases:{{ game.purchase_number}} </small></p>
 				</div>
 				<div class="col-md-3 pull-left">
 						<div class = "container col-md-12">
@@ -24,9 +23,10 @@
 				</div>
 				<div class="col-md-2 text-center">
 						<p><small> Price:{{ game.price}} </small></p>
-						<button type="button" class="btn btn-primary btn-sm btn-block">Edit game </button>
+
+						<button type="button" class="btn btn-primary btn-sm btn-block" onclick="location.href='/upload/edit/?&id={{game.id}}';" >Edit game</a></button>
 				</div>
 		</a>
-    {% endfor %}
+  {% endfor %}
 </div>
 {% endblock %}

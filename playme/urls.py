@@ -26,7 +26,6 @@ from backend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^developer/dashboard/$', views.developer_dahsboard, name='developer_dashboard'),
-    url(r'^developer/uploads/$', views.developer_uploads, name='developer_uploads'),
     url(r'^payment/success/$', views.payment_success, name='success'),
     url(r'^payment/cancel/$', views.payment_cancel, name='cancel'),
     url(r'^payment/error/$', views.payment_error, name='error'),
@@ -43,7 +42,9 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^aboutus/$', views.aboutus, name='aboutus'),
     url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
-    url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
+    url(r'^aboutus/$', views.aboutus, name='aboutus'),
+    url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
+    url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     url(r'^mygames/$', views.mygames, name='mygames'),
     url(r'^$', views.home, name='home'),
