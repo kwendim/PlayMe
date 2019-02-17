@@ -11,6 +11,7 @@ from django.utils import timezone
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_developer = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(default=False)
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

@@ -15,6 +15,12 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'is_developer', 'password1', 'password2')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email already registered.")
+        return email
+
 
 class GameUploadForm(forms.ModelForm):
     name = forms.CharField(max_length=30, required=True)

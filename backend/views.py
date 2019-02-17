@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from backend.forms import SignUpForm,GameUploadForm
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from backend.forms import SignUpForm, GameUploadForm
+from backend.tokens import account_activation_token
 from .models import Game,Profile,Transaction, Score, State
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -22,20 +27,51 @@ def home(request):
     return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
 def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()  # load the profile instance created by the signal
-            user.profile.is_developer = form.cleaned_data.get('is_developer')
-            user.save()
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return redirect('home')
+	if request.user.is_authenticated:
+		games = Game.objects.all()
+		return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			user.is_active = False
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.profile.is_developer = form.cleaned_data.get('is_developer')
+			user.save()
+			current_site = get_current_site(request)
+			encodeded_uid = urlsafe_base64_encode(force_bytes(user.pk))
+			subject = 'Activate Your PlayMe Account'
+			message = render_to_string('account_activation_email.html', {
+				'user': user,
+				'domain': current_site.domain,
+				'uid': encodeded_uid.decode('utf-8'),
+				'token': account_activation_token.make_token(user),
+			})
+			user.email_user(subject, message)
+			return redirect('account_activation_sent')
+	else:
+		form = SignUpForm()
+	return render(request, 'registration/signup.html', {'form': form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.profile.email_confirmed = True
+        user.save()
+        login(request, user)
+        games = Game.objects.all()
+        return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
     else:
-        form = SignUpForm(initial={'last_name': 'hello'})
-    return render(request, 'registration/signup.html', {'form': form})
+        return render(request, 'account_activation_invalid.html')
+
+def account_activation_sent(request):
+	return render(request, 'account_activation_sent.html')
 
 @login_required(login_url='login')
 def mygames(request):
