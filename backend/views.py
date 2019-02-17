@@ -307,3 +307,9 @@ def load_game(request, game_id):
 		return JsonResponse(state.current_state, safe=False)
 	except Exception as e:
 		return JsonResponse(data={}, status=500)
+
+def search(request):
+	input_text = search_query = request.GET.get('search-text')
+	print(input_text)
+	games = Game.objects.filter(name__contains=input_text)
+	return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})

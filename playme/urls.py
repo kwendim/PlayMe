@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^play/(?P<game_id>[0-9]+)/submit_score/$', views.submit_score, name='submit_score'),
     url(r'^play/(?P<game_id>[0-9]+)/save_game/$', views.save_game, name='save_game'),
     url(r'^play/(?P<game_id>[0-9]+)/load_game/$', views.load_game, name='load_game'),
+    url(r'^search/', views.search, name='search'),
     url(r'^(?P<game_id>[0-9]+)/$', views.buy, name='buy'),
     url(r'^upload/delete/$', views.delete_upload, name='delete'),
     url(r'^upload/edit/$', views.edit_upload, name='edit'),
