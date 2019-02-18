@@ -5,6 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.shortcuts import reverse
 
 # Create your models here.
 
@@ -54,6 +55,9 @@ class Game(models.Model):
     category = models.CharField(max_length=20, choices=GAME_CATEGORIES)
     price = models.IntegerField(default=0, blank=True)
     thumbnail = models.ImageField(default='def.jpg', upload_to ='thumbnail', blank = True)
+
+    def get_absolute_url(self):
+        return reverse('buy', kwargs={'game_id':self.id})
 
 
 class TransactionManager(models.Manager):
