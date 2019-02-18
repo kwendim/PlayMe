@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^mygames/$', views.mygames, name='mygames'),
     url(r'^$', views.home, name='home'),
     url(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
+    url(r'^category/$', views.category, name='category'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate')
 
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

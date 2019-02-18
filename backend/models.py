@@ -33,7 +33,25 @@ class Game(models.Model):
     purchase_number = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now, blank=True)
-    category   =  models.CharField(max_length = 100)
+    ACTION = 'AC'
+    ADVENTURE = 'AD'
+    COMBAT = 'CO'
+    EDUCATIONAL = 'EDU'
+    PUZZLE = 'PZ'
+    RPG = 'RPG'
+    SPORTS = 'SPR'
+    STRATEGY = 'STR'
+    GAME_CATEGORIES = (
+        (ACTION, 'Action'),
+        (ADVENTURE, 'Adventure'),
+        (COMBAT, 'Combat'),
+        (EDUCATIONAL, 'Educational'),
+        (PUZZLE, 'Puzzle'),
+        (RPG, 'RPG'),
+        (SPORTS, 'Sports'),
+        (STRATEGY, 'Strategy'),
+    )
+    category = models.CharField(max_length=20, choices=GAME_CATEGORIES)
     price = models.IntegerField(default=0, blank=True)
     thumbnail = models.ImageField(default='def.jpg', upload_to ='thumbnail', blank = True)
 
