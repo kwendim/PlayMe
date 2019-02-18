@@ -302,15 +302,12 @@ def leaderboard(request):
 		if (game_intermediate_high.count() > 0):
 			game_high_scores.append(game_intermediate_high)
 
-		user_intermediate_high = Score.objects.filter(game=game.id, player = request.user.profile).order_by('-current_score').values('player__user__username','game__name', 'current_score').distinct()[:1]
-		if (user_intermediate_high.count() > 0):
-			user_high_scores.append(user_intermediate_high)
+	if (request.user.is_authenticated):
+		for game in games:
+				user_intermediate_high = Score.objects.filter(game=game.id, player = request.user.profile).order_by('-current_score').values('player__user__username','game__name', 'current_score').distinct()[:1]
+				if (user_intermediate_high.count() > 0):
+					user_high_scores.append(user_intermediate_high)
 
-	# for e in game_high_scores:
-	# 	print(list(e)[0].get('current_score'))
-	#print(games)
-	#print('user_high_socres', user_high_scores)
-	#print('game_high_scores', game_high_scores)
 	return render(request, 'leaderboard.html',{'MEDIA_URL' : MEDIA_URL,'games': games, 'user_high_scores': user_high_scores, 'game_high_scores': game_high_scores})
 
 @login_required(login_url='login')
