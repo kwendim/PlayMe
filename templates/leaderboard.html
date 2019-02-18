@@ -4,24 +4,34 @@
   <div class="panel panel-success">
     <div class="panel-heading">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-3">
-          <h2 class="text-center" style="padding-left: 50px;"> <span class="glyphicon glyphicon-list-alt"> </span> Leaderboard </h2>
+        <div class="col-md-10">
+          <h2 class="text-center"> <span class="glyphicon glyphicon-list-alt"> </span> Leaderboard </h2>
         </div>
       </div>
     </div>
 
     <div class="panel-body table-responsive">
 
-      <ul class="list-unstyled">
+      <ul class="list-group">
           {% for game in games %}
-        <li class="media">
-        <img class=" align-self-end mr-3" src="{{MEDIA_URL}}/{{game.thumbnail}}" alt="Generic placeholder image">
-        <div class="media-body">
-          <h3 class="mt-0 mb-1">{{game.name}}</h3>
-          <p>Highest score is: {{game_high_scores|get_item:game.name}}</p>
-          <p>Your Score is: {{user_high_scores|get_item:game.name}}</p>
-        </div>
-        </li>
+            <a class="list-group-item">
+        				<div class="media col-md-3">
+        						<figure class="pull-left">
+        								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" 	,alt = "logo">
+        						</figure>
+        				</div>
+        				<div class="col-md-4">
+        						<h3> {{game.name}} </h3>
+                    <h4>Your Score is: {{user_high_scores|get_item:game.name}}</h4>
+        				</div>
+        				<div class="col-md-3 ">
+                    <img src="{% static 'img/winner-logo.jpg'  %}" width="50" height="50" alt="">
+                      <h3>Highest score</h3>
+                      <h4> {{game_high_scores|get_item:game.name}}</h4>
+        				</div>
+        				<div class="col-md-2">
+                </div>
+            </a>
           {% endfor %}
       </ul>
 

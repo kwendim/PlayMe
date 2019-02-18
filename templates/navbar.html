@@ -1,6 +1,6 @@
 {% load static %}
 {% if user.is_authenticated %}
-  <nav class="navbar navbar-expand-lg mb-0 navbar-dark bg-dark" >
+  <nav class="navbar navbar-expand-lg mb-0 mr-0 navbar-dark bg-dark " >
       <span class=" nav-item navbar-brand mb-0 "><img src="{% static 'img/icon.png'  %}" width="30" height="30" class="d-inline-block align-top" alt="">PlayMe</span>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
         			<a class="nav-link" href=" {% url 'home' %}">Home</a>
         		</li>
         		<li class="nav-item">
-        			<a class="nav-link" href="#">My Games</a>
+        			<a class="nav-link" href="{% url 'mygames' %}">My Games</a>
         		</li>
 
         		<li class="nav-item dropdown">
@@ -26,29 +26,27 @@
         		<li class="nav-item">
         			<a class="nav-link" href="{% url 'leaderboard' %}">Show leaderboard</a>
         		</li>
-        		<li class="nav-item">
+        		<li class="nav-item mr-5">
         			<a class="nav-link" href="{% url 'aboutus' %}">About us</a>
         		</li>
-          </ul>
-          <ul class="navbar-nav my-2 my-lg-0">
-          <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit" align="right">Search</button>
-          </form>
+            <form class="form-inline ml-5 mr-5">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                  <button class="btn btn-primary my-2 my-sm-0" type="submit" align="right">Search</button>
+            </form>
+            <li class="nav-item dropdown ml-5">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                Hello {{user.username}}!
+                </a>
+                <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownmenu">
+                    {% if user.profile.is_developer %}
+                      <a class="nav-link" href="{% url 'developer_dashboard' %}">Dashboard</a>
+                      <a class="nav-link" href="{% url 'upload' %}">Upload</a>
+                    {% endif %}
+                      <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
 
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdownmenu" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i>Hello {{user.username}}!</i>
-              </a>
-              <div class="dropdown-menu navbar-dark bg-dark" aria-labelledby="navbarDropdownmenu">
-                  {% if user.profile.is_developer %}
-                    <a class="nav-link" href="{% url 'developer_dashboard' %}">Dashboard</a>
-                    <a class="nav-link" href="{% url 'upload' %}">Upload</a>
-                  {% endif %}
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-              </div>
-            </li>
           </ul>
       </div>
   </nav>

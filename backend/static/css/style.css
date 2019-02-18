@@ -1,11 +1,6 @@
 .container2 {
   width: 600px !important;
 }
-.row{
-
-padding-bottom: 10px;
-
-}
 
 body{
 
@@ -37,6 +32,11 @@ color: #337ab7;
 
 }
 h4{
+
+color: #337ab7;
+
+}
+h5{
 
 color: #337ab7;
 

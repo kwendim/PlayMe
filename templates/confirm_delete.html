@@ -1,17 +1,20 @@
-
 {% extends "base.html" %}
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <h1>Are you sure you want to delete {{ game.name }}?</h1>
-                <form action="/upload/delete/?&id={{game.id}}" method="POST">{% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                    <a href="{% url 'developer_dashboard' %}" class="btn btn-default">No</a>
-                </form>
-                
-            </div>
+      <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info" >
+          <div class="panel-heading">
+              <div class="panel-title content ">Are you sure you want to delete {{ game.name }}?</div>
+          </div>
+          <div style="padding-top:30px" class="panel-body" >
+            <form action="/upload/delete/?&id={{game.id}}" method="POST">{% csrf_token %}
+                <button type="submit" class="btn btn-primary">Yes</button>
+                <a href="{% url 'developer_dashboard' %}" class="btn btn-default">No</a>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+
 {% endblock content %}
