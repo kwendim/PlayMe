@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+<head>
+    <script src="{% static '/js/game-service.js' %}"></script>
+</head>
 <div class="panel panel">
     <div class="panel-heading">
         <div class="row">
@@ -47,7 +50,7 @@
             </div>
             <p id="result"></p>
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <iframe id="game_frame" src={{game.link}} style="width: 100vw;height: 100vh;position: relative;" src="https://example.com" frameborder="0" allowfullscreen></iframe>
+                <iframe id="game_frame" src={{game.link}} width="800" height="600" frameborder="1" allowfullscreen></iframe>
             </div>
      </div>
 
