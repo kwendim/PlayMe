@@ -1,36 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-	<body>
-		<div class = "container">
-			<div class  = "col-md-3"></div>
-			<div class  = "col-md-4">
-			<h1>UPLOAD</h1>
-			{% if upload_done %}
-		    <strong>Thanks for uploading!</strong>
-			<a href="{% url 'developer_dashboard' %}">Return to My Uploads</a><br />
-			{% else %}
 
-				{% if is_edit %}
-				<form action="/upload/edit/?&id={{game_id}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-				{% else %}
-				<form action="/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
-				{% endif %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-10">
+          <h1 class="text-center">UPLOAD</h1>
+        </div>
+      </div>
+    </div>
+		 <div class="row">
+				<div class  = "col-md-3"></div>
+				<div class  = "col-md-6 text-left">
+							{% if upload_done %}
+						    <strong>Thank you for uploading!</strong>
+								<a href="{% url 'developer_dashboard' %}">Return to the homepage.</a>
+								{% else %}
 
-				{{ form.as_p }}
-					<br>
-					<div class="form-group">
-							<button class="btn btn-primary" type="submit">Save</button>
 							{% if is_edit %}
-							<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
+								<form action="/upload/edit/?&id={{game_id}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+							{% else %}
+								<form action="/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
 							{% endif %}
-							<a href="{% url 'developer_dashboard' %}" class="btn btn-default">Cancel</a>
-					</div>
-			</form>
+								{{ form.as_p }}
 
-
-			{% endif %}
-	        </div>
-		</div>
-	</body>
-  {% endblock %}
+								<br>
+								<div class="form-group">
+										<button class="btn btn-primary" type="submit">Save</button>
+										{% if is_edit %}
+										<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
+										{% endif %}
+										<a href="{% url 'developer_dashboard' %}" class="btn btn-default">Cancel</a>
+								</div>
+						</form>
+					{% endif %}
+	      </div>
+				<div class  = "col-md-3"></div>
+			</div>
+</div>
+{% endblock %}

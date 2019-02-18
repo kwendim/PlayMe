@@ -1,60 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang = "en">
-	<head>
-	   <meta charset  = "utf-8">
-	   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-	   <meta name = "viewport" content  = "width = divice-width , initial-scale = 1">
-	   <title>PlayMe Game Store</title>
-       <link rel = "stylesheet" href = "{% static 'css/bootstrap.css' %}">
-       <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
-	   <script src= "{% static  'js/jquery-2.1.4.js' %}" ></script>  
-	   <script src= "{% static  'js/bootstrap.js' %}" ></script>
-	   <script src="{% static '/js/ie-emulation-modes-warning.js' %}"></script>
-	</head>
-	<body>  
-        <div class="container">
-            <div class="row">
-                <div class = "col-md-8">
-                    <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">            
-                </div>
-                <div class = "col-md-4">				 	    
-                    <h1>{{ game.name }}</h1>
-                    <h2>{{game.price}} $</h2>
-                </div>
-            </div>
-            <hr>
+<div class="panel panel-success">
+    <div class="panel-heading">
+		    <div class="row">
+		        <div class = "col-md-8">
+		            <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+		        </div>
+		        <div class = "text-center col-md-4">
+		            <h1>{{ game.name }}</h1>
+		            <h2>{{game.price}} $</h2>
+		        </div>
+		    </div>
+			</div>
 
+    <hr>
 
-            <div class="row">
-                <div class  = "col-md-4"></div>
-                <div class  = "col-md-4">	
-                <form id="payment_form" method="post" action="http://payments.webcourse.niksula.hut.fi/pay/" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input  id="Name"  class="form-control" type="text" name="name" placeholder="Name on Card" >
-                        <hr>  
-                        <input  id="card_number" class="form-control" type="text" name="card_number" placeholder="Card Number">
-                        <hr>  
-                        <input  id="Expiration" class="form-control" type="date" name="link" placeholder="Expiration Date">
-                        <hr> 
-                        <input type="hidden" name="pid" value="{{transaction.id}}" />
-                        <input type="hidden" name="sid" value="{{SELLER_ID}}" />
-                        <input type="hidden" name="success_url"
-                                value="http://localhost:8000/payment/success/" />
-                        <input type="hidden" name="cancel_url"
-                                value="http://localhost:8000/payment/cancel/" />
-                        <input type="hidden" name="error_url"
-                                value="http://localhost:8000/payment/error/" />
-                        <input type="hidden" name="checksum"
-                                value="{{checksum}}" />                    
-                        <label for="id_amount">Amount {{transaction.amount}} $</label>
-                        <input type="hidden" id="id_amount" name="amount" value={{transaction.amount}} />
-                    <button class="btn  btn-primary btn-block submit" value="Accept Payment" type="submit">Accept Payment</button>			
-                </form>                    
-            </div>
+    <div class="row">
+        <div class  = "col-md-4"></div>
+        <div class  = "col-md-4">
+        <form id="payment_form" method="post" action="http://payments.webcourse.niksula.hut.fi/pay/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input  id="Name"  class="form-control" type="text" name="name" placeholder="Name on Card" >
+                <hr>
+                <input  id="card_number" class="form-control" type="text" name="card_number" placeholder="Card Number">
+                <hr>
+                <input  id="Expiration" class="form-control" type="date" name="link" placeholder="Expiration Date">
+                <hr>
+                <input type="hidden" name="pid" value="{{transaction.id}}" />
+                <input type="hidden" name="sid" value="{{SELLER_ID}}" />
+                <input type="hidden" name="success_url"
+                        value="http://localhost:8000/payment/success/" />
+                <input type="hidden" name="cancel_url"
+                        value="http://localhost:8000/payment/cancel/" />
+                <input type="hidden" name="error_url"
+                        value="http://localhost:8000/payment/error/" />
+                <input type="hidden" name="checksum"
+                        value="{{checksum}}" />
+                <label for="id_amount">Amount {{transaction.amount}} $</label>
+                <input type="hidden" id="id_amount" name="amount" value={{transaction.amount}} />
+            <button class="btn  btn-primary btn-block submit" value="Accept Payment" type="submit">Accept Payment</button>
+        </form>
+    </div>
+    </div>
 
-            </div>
-        </div>
-
-    </body>
-</html>
+</div>
+{% endblock %}
