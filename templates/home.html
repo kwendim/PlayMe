@@ -8,7 +8,7 @@
 							<img class="card-img-top img-responsive" src="{{MEDIA_URL}}/{{game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
 					    <div class="card-body">
 					      <h4 class="card-title">{{game.name}}</h4>
-					      <p class="card-text">by {{game.developer.user.username}}</p>
+					      <p class="card-text">by {{game.developer.user.first_name}} {{game.developer.user.last_name}}</p>
 					    </div>
 					    <div class="card-footer">
 								<p><a href="/{{game.id}}/" class="btn btn-primary" role="button">More info </a>

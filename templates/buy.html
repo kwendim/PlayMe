@@ -8,8 +8,8 @@
 						<div class="row">
 								<div class="col-6">
 							    	<h4 class="card-title">{{game.name}}</h4>
-									<p class="card-text">Description:{{game.description}}</p>
-									<p class="card-text">Developed by:  {{game.developer.user.username}}</p>
+									<p class="card-text">Description: {{game.description}}</p>
+									<p class="card-text">Developed by: {{game.developer.user.first_name}} {{game.developer.user.last_name}}</p>
 								</div>
 								<div class="col-6">
 									<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
