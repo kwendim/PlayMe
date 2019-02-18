@@ -1,63 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-		    <div class="panel panel-success">
-		      <div class="panel-heading">
-		        <div class="row">
-		          <div class="col-6">
-										<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
-								</div>
+<div class="panel">
+  <div class="panel-heading">
+			<div class="card h-100">
+			    <div class="card-body">
+						<div class="row">
 								<div class="col-6">
-										<div class="card h-100">
-									    <div class="card-body">
-									      <h4 class="card-title">{{game.name}}</h4>
-									      <p class="card-text">Ratings:{{game.rating}}</p>
-												 <p class="card-text">Description:{{game.description}}</p>
-												  <p class="card-text">Developed by:  {{game.developer.user.username}}</p>
-									    </div>
-									    <div class="card-footer">
-												<h4> Purchased {{game.purchase_number}}<h4>
-													<p> Game price: {{game.price}}$</p>
-													{% if user_has_bought_game or is_developers_game %}
-													<a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
-													{% else %}
-													<a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
-							 
-													{% endif %}
-																		
-									    </div>
-									  </div>
+							      <h4 class="card-title">{{game.name}}</h4>
+							      <p class="card-text">Ratings:{{game.rating}}</p>
+										<p class="card-text">Description:{{game.description}}</p>
+										<p class="card-text">Developed by:  {{game.developer.user.username}}</p>
 									</div>
-		          </div>
-		        </div>
-		      </div>
-
-		      <div class="panel-body table-responsive">
-
-		
-				 </div>
- 	
-									   <!-- Split button -->
-					<!-- <div class="btn-group">
-					  <button type="button" class="btn btn-danger" >Rating<span class="badge">{{app.rating}}</span></button>
-					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    <span class="caret"></span>
-					    <span class="sr-only">Toggle Dropdown</span>
-					  </button>
-					  <ul class="dropdown-menu">
-					    <li><a href="/rating/{{app.id}}/1/">1</a></li>
-					    <li><a href="/rating/{{app.id}}/2/">2</a></li>
-					    <li><a href="/rating/{{app.id}}/3/">3</a></li>
-					    <li><a href="/rating/{{app.id}}/4/">4</a></li>
-					    <li><a href="/rating/{{app.id}}/5/">5</a></li>
-					    
-					  </ul>
-					</div>  -->
-				   
-				 </div>
-			 </div>
-			
-		 </div>
-
-		    </div>
+									<div class="col-6">
+										<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+									</div>
+						</div>
+			    </div>
+			    <div class="card-footer">
+						<h4> Purchased {{game.purchase_number}}<h4>
+							<p> Game price: {{game.price}}$</p>
+							{% if user_has_bought_game or is_developers_game %}
+							<a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
+							{% else %}
+							<a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
+							{% endif %}
+			    </div>
+		  </div>
+  </div>
+</div>
 {% endblock %}
