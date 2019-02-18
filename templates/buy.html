@@ -4,6 +4,7 @@
 {% load social_share %}
 <html prefix="og: http://ogp.me/ns#">
 	<head>
+		<meta property="og:url" content="http://demo-playme.herokuapp.com/{{game.id}}/" />
 		<meta property="og:title" content="New Game on Play Me: {{game.name}}" />
 		<meta property="og:description" content="{{game.description}}"/>
 		<meta property="og:image" content="{{game.thumbnail}}"/>
