@@ -342,6 +342,9 @@ def search(request):
 		games = Game.objects.all()
 	else:
 		games = Game.objects.filter(name__contains=input_text)
+	print(len(games))
+	for game in games:
+		print(game.name)
 	return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
 def category(request):
