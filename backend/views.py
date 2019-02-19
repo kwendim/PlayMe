@@ -336,7 +336,7 @@ def get_item(query, key):
 	return None
 
 def search(request):
-	input_text = request.GET.get('search-text')
+	input_text = request.GET.get('search-text', '')
 	games = Game.objects.filter(name__contains=input_text)
 	return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
