@@ -2,20 +2,13 @@
 {% block content %}
 {% load static %}
 <div class="panel panel">
-    <div class="panel-heading">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="text-center"> <span class="glyphicon glyphicon-list-alt"> </span> Dashboard </h2>
-        </div>
-      </div>
-    </div>
     <div class="panel-body table-responsive">
       <div class="list-group">
         {% for game in games %}
       		<a class="list-group-item">
       				<div class="media col-md-3">
       						<figure class="pull-left">
-      								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" 	,alt = "logo">
+      								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="150" height="150"	,alt = "logo">
       						</figure>
       				</div>
       				<div class="col-md-4">
@@ -31,7 +24,7 @@
       						</div>
       				</div>
       				<div class="col-md-2 text-center">
-      						<p><small> Price:{{ game.price}} </small></p>
+      						<p> Price:{{ game.price}} </p>
       						<button type="button" class="btn btn-primary btn-sm btn-block" onclick="location.href='/upload/edit/?&id={{game.id}}';" >Edit game</button>
               </div>
               </a>
