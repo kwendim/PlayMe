@@ -37,7 +37,7 @@ Web Software development project: PlayMe, an online game store for JavaScript ga
     Though there were no programatical tests done on the code, the developers have spent extra effort in manually testing the website to help avoid bad user experience, and website failure. (80 points)
 
 6. Non-functional requirements
-    The project plan provided an excellent skeleton for the development of the website. In its esssence, a project plan can not forsee all the details of implementation and as such, we had to add new views, templates and make modifications to the models during the course of the project work. There were no significantlly challenging aspects of the work that could not be solved with the extensive amount of support there is for django. The course work was divided equally among the memebers and gitlab was utilized for merging. (200 points)
+    The project plan provided an excellent skeleton for the development of the website. In its essence, a project plan can not forsee all the details of implementation and as such, we had to add new views, templates and make modifications to the models during the course of the project work. There were no significantlly challenging aspects of the work that could not be solved with the extensive amount of support there is for django. The course work was divided equally among the memebers and gitlab was utilized for merging. (200 points)
 
 ### Extra features
 
