@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<div class="panel">
-<div class="panel-body table-responsive">
-  <ul class="list-group">
-        <a class="list-group-item">
+<div class="container">
+    <br>
 		    <div class="row">
-		        <div class = "col-md-4">
+		        <div class = "col-md-4 ">
 		            <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="180" height="180" ,alt = "logo">
 		        </div>
 		        <div class = "col-md-4">
-		            <h2>{{ game.name }}</h2>
-		            <h3>{{game.price}} $</h3>
+                    <h2>{{ game.name }}</h2>
+                    <h4>{{game.description}}</h4>
+                    <h5>{{game.price}} $</h5>
+                    
 		        </div>
 		    </div>
-        </a>
-        </ul>
 
     <hr>
 
@@ -46,6 +44,5 @@
         </form>
     </div>
     </div>
-</div>
 </div>
 {% endblock %}
