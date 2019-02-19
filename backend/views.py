@@ -61,22 +61,22 @@ def signup(request):
 
 def activate(request, uidb64, token):
 	"""Fired when user clicks activation link. Activates the user's account if the link is correct."""
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=uid)
+	except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
 
-    if user is not None and account_activation_token.check_token(user, token):
+	if user is not None and account_activation_token.check_token(user, token):
 		# User activated and redirected to the homepage
-        user.is_active = True
-        user.profile.email_confirmed = True
-        user.save()
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        games = Game.objects.all()
-        return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
-    else:
-        return render(request, 'account_activation_invalid.html')
+		user.is_active = True
+		user.profile.email_confirmed = True
+		user.save()
+		login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+		games = Game.objects.all()
+		return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
+	else:
+		return render(request, 'account_activation_invalid.html')
 
 def account_activation_sent(request):
 	"""Redirects the user to the email verification page after sign-up."""
@@ -324,7 +324,7 @@ def save_game(request, game_id):
 
 def aboutus(request):
 	"""Renders the aboutus.html page"""
-    return render(request, 'aboutus.html')
+	return render(request, 'aboutus.html')
 
 def leaderboard(request):
 	"""Retreives the leaderboard with the global high scores and the user's high scores if the user
