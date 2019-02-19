@@ -1,58 +1,100 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<head>
-    <script src="{% static '/js/game-service.js' %}"></script>
-</head>
-<div class="panel panel">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="media col-md-3">
-                <figure class="pull-left">
-                    <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}",alt = "logo">
-                </figure>
+<div class="container">
+    <br>
+<div id = "game_div" class = "row">
+     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="panel">
+                <div class="panel-heading">
+                            <figure class="pull-left">
+                                <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="200" height="200" alt = "logo">
+                            </figure>
+                            <h2> {{ game.name }} </h2>
+                </div>
             </div>
-            <div class="col-md-9">
-                <h2> {{ game.name }} </h2>
-                <h4>{{game.description}}<h4>
-            </div>
-        </div>
-     </div>
-     <div>
-       <hr>
-     </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <caption>Player Scores</caption>
+            <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        
+                    {% for player_score in player_scores %}                               
+                     <tr>
+                        <td> {{ forloop.counter }}</td>
+                         <td>{{request.user.profile.user.username}}</td>
+                         <td>{{high_score.current_score}}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                                <td>1</td>
+                                <td>{{request.user.profile.user.username}}</td>
+                                <td>0</td>
+                        </tr>
 
-     <div id = "game_div" class = "row">
-            <div class="row">
-                    <table>
-                            <caption>High Scores</caption>
-                            <tr>
-                                <th>Player</th>
-                                <th>Score</th>
-                            </tr>
-                            {% for high_score in high_scores %}
-                                <tr>
-                                    <td>{{high_score.player__user__username}}</td>
-                                    <td>{{high_score.current_score}}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-        
-                        <table>
-                            <caption>Your Scores</caption>
-                            <tr>
-                                <th>Score</th>
-                            </tr>
-                            {% for player_score in player_scores %}
-                                <tr><td>{{player_score.current_score}}</td></tr>
-                            {% endfor %}
-                        </table>
-            </div>
-            <p id="result"></p>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <iframe id="game_frame" src={{game.link}} width="800" height="600" frameborder="1" allowfullscreen></iframe>
-            </div>
-     </div>
+                    {% endfor %}
+
+                    </tbody>
+             </table>
+
+            <caption>High Scores</caption>
+            <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        
+                    {% for high_score in high_scores %}
+                        <tr>
+                        <td> {{ forloop.counter }}</td>
+                         <td>{{high_score.player__user__username}}</td>
+                         <td>{{high_score.current_score}}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                                <td>1</td>
+                                <td>  -</td>
+                                <td>  -</td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+             </table>
 
 </div>
+</div>
+</div>
+    
+
+ <hr>
+
+<div class="container">
+
+            <div class="panel panel">
+
+              <div class="panel-body table-responsive">
+                <ul class="list-group">
+                      <a class="list-group-item">
+            <p id="result"></p>
+            <div >
+                <iframe id="game_frame" src={{game.link}} style="width: 70vw;height: 70vh;position: relative;" src="https://example.com" frameborder="0"></iframe>
+            </div>
+            </a>
+            </ul>
+            </div>
+            </div>
+</div>
+
 {% endblock %}

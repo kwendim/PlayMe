@@ -2,36 +2,28 @@
 {% load static %}
 {% block content %}
   <div class="panel panel">
-    <div class="panel-heading">
-      <div class="row">
-        <div class="col-md-10">
-          <h2 class="text-center"> <span class="glyphicon glyphicon-list-alt"> </span> Leaderboard </h2>
-        </div>
-      </div>
-    </div>
 
     <div class="panel-body table-responsive">
-
       <ul class="list-group">
           {% for game in games %}
             <a class="list-group-item">
         				<div class="media col-md-3">
         						<figure class="pull-left">
-        								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" 	,alt = "logo">
+        								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="120" height="120"	,alt = "logo">
         						</figure>
         				</div>
         				<div class="col-md-4">
         						<h3> {{game.name}} </h3>
                     <h4>Your Score is: {{user_high_scores|get_item:game.name}}</h4>
         				</div>
-        				<div class="col-md-3 ">
-                    <img src="{% static 'img/winner-logo.jpg'  %}" width="50" height="50" alt="">
-                      <h3>Highest score</h3>
+        				<div class="col-md-3 text-center">
+                    <img src="{% static 'img/highest-score.jpg'  %}" width="90" height="70" alt="">
                       <h4> {{game_high_scores|get_item:game.name}}</h4>
         				</div>
         				<div class="col-md-2">
                 </div>
             </a>
+            <br>
           {% endfor %}
       </ul>
 

@@ -2,18 +2,16 @@
 {% load static %}
 {% load static %}
 {% block content %}
-<div class="panel panel-success" >
-    <div class="panel-heading">
 			<div class="row">
 				<div class="col-md-10">
 	        {% if malformed %}
-	          <h2 class="text-center ">Malformed purchase. Transaction not accepted</h2>
+	          <h3 class="text-center ">Malformed purchase. Transaction not accepted</h3>
 	        {% else %}
-	          <h2 class="text-center ">You have successfully purchased the game.</h2>
+	          <h3 class="text-center ">You have successfully purchased the game.</h3>
 	        {% endif %}
 				</div>
-			</div>
-    </div>
+        </div>
+
 		<div class="list-group">
 	  		<a class="list-group-item">
 	  				<div class="media col-md-3">
@@ -21,7 +19,7 @@
 	  								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" 	,alt = "logo">
 	  						</figure>
 	  				</div>
-	  				<div class="col-md-4">
+	  				<div class="col-md-4 text-center">
 	  						<h4> {{game.name}} </h4>
 								{% if not malformed %}
 										<form action="/play/{{game.id}}">
