@@ -26,7 +26,7 @@ class SignUpForm(UserCreationForm):
 class GameUploadForm(forms.ModelForm):
     name = forms.CharField(max_length=30, required=True)
     category = forms.ChoiceField(choices=tokens.GAME_CATEGORIES, required=True)
-    description = forms.CharField(max_length=200, required=True)
+    description = forms.Textarea()
     link = forms.URLField(required=True)
     price = forms.IntegerField(max_value= 100, min_value= 0, required= True)
     thumbnail = forms.ImageField(required=False)

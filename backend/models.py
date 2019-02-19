@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.shortcuts import reverse
+from PIL import Image
 import backend.tokens as tokens
 
 # Create your models here.
@@ -31,7 +32,7 @@ class Game(models.Model):
             MinValueValidator(0)
         ])
     high_score = models.PositiveIntegerField(default=0, blank=True)
-    description = models.TextField(blank=True)
+    description = models.TextField()
     link = models.URLField("game_url")
     purchase_number = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -42,7 +43,13 @@ class Game(models.Model):
 
     def get_absolute_url(self):
         return reverse('buy', kwargs={'game_id':self.id})
-
+    
+    def save(self):
+        super(Game, self).save()
+        image = Image.open(self.thumbnail)
+        size = (200, 200)
+        image = image.resize(size, Image.ANTIALIAS)
+        image.save(self.thumbnail.path)
 
 class TransactionManager(models.Manager):
     def create(self, payer, payee, game,amount):

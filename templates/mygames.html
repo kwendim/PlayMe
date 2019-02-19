@@ -17,7 +17,7 @@
 									<img class="card-img-top img-responsive" src="{{MEDIA_URL}}/{{tr.game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
 									<div class="card-body">
 											<h4 class="card-title">{{tr.game.name}}</h4>
-											<p class="card-text">By {{tr.game.developer.user.username}}</p>
+											<p class="card-text">By {{tr.game.developer.user.first_name}} {{tr.game.developer.user.last_name}}</p>
 									</div>
 									<div class="card-footer">
 										<p><a href="{% url 'play' tr.game.id %}" class="btn btn-primary" role="button">Play </a>
