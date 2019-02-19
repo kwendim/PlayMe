@@ -337,6 +337,7 @@ def get_item(query, key):
 
 def search(request):
 	input_text = request.GET.get('search-text', '')
+	print(request.GET, input_text)
 	if input_text == '':
 		games = Game.objects.all()
 	else:
