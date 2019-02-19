@@ -19,12 +19,24 @@ from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-
-
+from rest_framework import routers
 from backend import views
+from playme.restapi import playviews
+
+
+
+router = routers.DefaultRouter()
+router.register(r'game', playviews.GameViewSet, base_name="games")
+router.register(r'sales', playviews.TransactionViewSet, base_name="sales")
+router.register(r'scores', playviews.ScoreViewSet, base_name="scores")
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('restapi/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^developer/dashboard/$', views.developer_dahsboard, name='developer_dashboard'),
     url(r'^payment/success/$', views.payment_success, name='success'),
     url(r'^payment/cancel/$', views.payment_cancel, name='cancel'),
