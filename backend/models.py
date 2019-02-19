@@ -9,10 +9,14 @@ from django.shortcuts import reverse
 from PIL import Image
 import backend.tokens as tokens
 
-# Create your models here.
-
+# For more info about the models documentation, please check the README.md file in the repository root.
 
 class Profile(models.Model):
+    """
+    The Profile model.
+
+    Extends the user built-in model.
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_developer = models.BooleanField(default=False)
     email_confirmed = models.BooleanField(default=False)
@@ -45,6 +49,7 @@ class Game(models.Model):
         return reverse('buy', kwargs={'game_id':self.id})
     
     def save(self):
+        """ Resizes the thumbnail image uploaded by the developer to 200*200 pixels."""
         super(Game, self).save()
         image = Image.open(self.thumbnail)
         size = (200, 200)
