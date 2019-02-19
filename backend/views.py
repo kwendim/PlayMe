@@ -83,7 +83,11 @@ def mygames(request):
 		state=Transaction.CONFIRMED
 	).select_related('game')
 
-	return render(request, 'mygames.html', {'transactions': transactions, 'MEDIA_URL': settings.MEDIA_URL})
+	games = Game.objects.filter(
+		developer=request.user.profile
+	)
+
+	return render(request, 'mygames.html', {'transactions': transactions, 'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
 @login_required(login_url='login')
 def upload(request):
