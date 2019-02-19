@@ -27,8 +27,8 @@ SESSION_EXPIRY_TIME = 900
 def home(request):
 	games = Game.objects.all()
 	print(settings.MEDIA_URL)
-	if request.META.get('HTTP_REFERER') is not None and 'login' in request.META.get('HTTP_REFERER'):
-		request.session.set_expiry(SESSION_EXPIRY_TIME)
+	#if request.META.get('HTTP_REFERER') is not None and 'login' in request.META.get('HTTP_REFERER'):
+		#request.session.set_expiry(SESSION_EXPIRY_TIME)
 	return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
 def signup(request):

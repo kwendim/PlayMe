@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-{% load social_share %}
 <div class="panel">
   <div class="panel-heading">
 			<div class="card h-100">
@@ -14,8 +13,7 @@
 								</div>
 								<div class="col-6">
 									<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
-									{% post_to_facebook%}
-									{% post_to_twitter "New Game: {{game.name}}. Check it out!" game%}
+									
 								</div>
 						</div>
 			    </div>
@@ -27,6 +25,8 @@
 							{% else %}
 							<a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
 							{% endif %}
+							<a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//demo-playme.herokuapp.com/{{game.id}}" class="btn btn-primary" role="button">Share on Facebook</a>
+							<a href="https://twitter.com/home?status=http%3A//demo-playme.herokuapp.com/{{game.id}}" class="btn btn-primary" role="button">Share on Twitter</a>
 			    </div>
 		  </div>
   </div>
