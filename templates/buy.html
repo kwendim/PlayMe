@@ -1,32 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<div class="panel">
-  <div class="panel-heading">
 			<div class="card h-100">
 			    <div class="card-body">
 						<div class="row">
-								<div class="col-6">
-							      <h4 class="card-title">{{game.name}}</h4>
-							      <p class="card-text">Ratings:{{game.rating}}</p>
-										<p class="card-text">Description:{{game.description}}</p>
-										<p class="card-text">Developed by:  {{game.developer.user.username}}</p>
+									<div class="col-lg-4 col-sm-6 col-xs-12">
+										<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="200" height="200" ,alt = "logo">
 									</div>
-									<div class="col-6">
-										<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" ,alt = "logo">
+									<div class="col-lg-4 col-sm-6 col-xs-12">
+  							      <h4 class="card-title">{{game.name}}</h4>
+  										<p class="card-text">Description:{{game.description}}</p>
+  										<p class="card-text">Developed by:  {{game.developer.user.username}}</p>
+                      <h4> Purchased {{game.purchase_number}}<h4>
+                        <p> Game price: {{game.price}}$</p>
+  								</div>
+									<div class="col-lg-4 col-sm-6 col-xs-12">
+                    {% if user_has_bought_game or is_developers_game %}
+                    <a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
+                    {% else %}
+                    <a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy for {{game.price}}$</a>
+                    {% endif %}
 									</div>
 						</div>
 			    </div>
-			    <div class="card-footer">
-						<h4> Purchased {{game.purchase_number}}<h4>
-							<p> Game price: {{game.price}}$</p>
-							{% if user_has_bought_game or is_developers_game %}
-							<a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
-							{% else %}
-							<a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy</a>
-							{% endif %}
-			    </div>
 		  </div>
-  </div>
-</div>
 {% endblock %}

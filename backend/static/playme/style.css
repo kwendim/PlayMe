@@ -46,10 +46,34 @@ html, body {
   padding-bottom: 70px;
 
 }
+.container2 {
+  width: 600px !important;
+}
+h1{
+  color: #337ab7;
+}
+
+h2{
+color: #337ab7;
+}
+h3{
+color: #337ab7;
+}
+h4{
+color: #337ab7;
+}
+h5{
+color: #337ab7;
+}
 
 .footer {
   width: 100%;
   height: 70px;
   background-color: white;
   text-align: center;
+}
+
+.makeitmiddle {
+  align-items: center;
+
 }

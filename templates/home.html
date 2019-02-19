@@ -1,21 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-			<div class="row text-center">
-					{% for game in games %}
-					<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4">
-						<div class="card h-100">
-							<img class="card-img-top img-responsive" src="{{MEDIA_URL}}/{{game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
-					    <div class="card-body">
-					      <h4 class="card-title">{{game.name}}</h4>
-					      <p class="card-text">by {{game.developer.user.username}}</p>
-					    </div>
-					    <div class="card-footer">
-								<p><a href="/{{game.id}}/" class="btn btn-primary" role="button">More info </a>
-
-					    </div>
-					  </div>
-					</div>
-					{% endfor %}
+<div class="container">
+	<div class="row">
+		<br>
+	</div>
+	<div class="row" >
+			<div class="col-md-1">
 			</div>
+			<div class="col-md-10" >
+				<div class="row text-center">
+						{% for game in games %}
+						<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 mb-4">
+							<div class="card ">
+								<img class="card-img-top img-responsive" src="{{MEDIA_URL}}/{{game.thumbnail}}" alt="logo">
+							    <div class="card-body">
+							      <h4 class="card-title">{{game.name}}</h4>
+							      <p class="card-text">By {{game.developer.user.username}}</p>
+							    </div>
+							    <div class="card-footer">
+										<p><a href="/{{game.id}}/" class="btn btn-primary" role="button">More info </a>
+							    </div>
+						  </div>
+						</div>
+						{% endfor %}
+				</div>
+		</div>
+		<div class="col-md-1" >
+		</div>
+	</div>
+</div>
 {% endblock %}

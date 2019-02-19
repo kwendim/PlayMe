@@ -6,13 +6,29 @@
         <div class="row">
             <div class="media col-md-3">
                 <figure class="pull-left">
-                    <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}",alt = "logo">
+                    <img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="200" height="200" alt = "logo">
                 </figure>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-3">
                 <h2> {{ game.name }} </h2>
                 <h4>{{game.description}}<h4>
             </div>
+            <div class="col-md-6">
+              <table>
+                      <caption>High Scores</caption>
+                      <tr>
+                          <th>Player</th>
+                          <th>Score</th>
+                      </tr>
+                      {% for high_score in high_scores %}
+                          <tr>
+                              <td>{{high_score.player__user__username}}</td>
+                              <td>{{high_score.current_score}}</td>
+                          </tr>
+                      {% endfor %}
+                  </table>
+            </div>
+
         </div>
      </div>
      <div>
@@ -34,22 +50,33 @@
                                 </tr>
                             {% endfor %}
                         </table>
-        
+                        </div>
+                        <div class="row">
                         <table>
                             <caption>Your Scores</caption>
-                            <tr>
-                                <th>Score</th>
-                            </tr>
                             {% for player_score in player_scores %}
                                 <tr><td>{{player_score.current_score}}</td></tr>
                             {% endfor %}
                         </table>
             </div>
-            <p id="result"></p>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <iframe id="game_frame" src={{game.link}} style="width: 100vw;height: 100vh;position: relative;" src="https://example.com" frameborder="0" allowfullscreen></iframe>
             </div>
-     </div>
+            <div>
+              <hr>
+            </div>
+
+            <div class="panel panel">
+
+              <div class="panel-body table-responsive">
+                <ul class="list-group">
+                      <a class="list-group-item">
+            <p id="result"></p>
+            <div >
+                <iframe id="game_frame" src={{game.link}} style="width: 70vw;height: 70vh;position: relative;" src="https://example.com" frameborder="0"></iframe>
+            </div>
+            </a>
+            </ul>
+            </div>
+            </div>
 
 </div>
 {% endblock %}
