@@ -1,33 +1,40 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load static %}
 {% block content %}
-			<div class="row">
-				<div class="col-md-10">
-	        {% if malformed %}
-	          <h3 class="text-center ">Malformed purchase. Transaction not accepted</h3>
-	        {% else %}
-	          <h3 class="text-center ">You have successfully purchased the game.</h3>
-	        {% endif %}
-				</div>
-        </div>
+<div class="container">
+	<br>
+	<br>
 
-		<div class="list-group">
-	  		<a class="list-group-item">
-	  				<div class="media col-md-3">
-	  						<figure class="pull-left">
-	  								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" 	,alt = "logo">
-	  						</figure>
-	  				</div>
-	  				<div class="col-md-4 text-center">
-	  						<h4> {{game.name}} </h4>
-								{% if not malformed %}
-										<form action="/play/{{game.id}}">
-											<input class="btn btn-success" type="submit" name="play" value="Play"/>
-										</form>
-								{% endif %}
-	  				</div>
-	      </a>
-	  </div>
+
+			<div class="row justify-content-center">
+	        {% if malformed %}
+	          <h3>Malformed purchase. Transaction not accepted</h3>
+	        {% else %}
+	          <h3 >You have successfully purchased the game</h3>
+	        {% endif %}
+        </div>
+	<br>
+
+
+						<div class="row justify-content-center">
+		  						<figure class="pull-left">
+		  								<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="200" height="200",alt = "logo">
+		  						</figure>
+									</div>
+
+									<div class="row justify-content-center">
+
+		  						<h4 style="text-align:center"> {{game.name}} </h4>
 </div>
+<div class="row justify-content-center">
+									{% if not malformed %}
+											<form action="/play/{{game.id}}">
+												<input class="btn btn-success" type="submit" name="play" value="Play"/>
+											</form>
+									{% endif %}
+								</div>
+
+						</div>
+						<br>
+
 {% endblock %}

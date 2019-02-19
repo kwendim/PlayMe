@@ -19,7 +19,8 @@
                           {{ form.as_p }}
                           <div class="col-sm-12 controls">
                               <button type="submit" class="btn btn-primary">Login</button>
-                              <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+                              <a id="btn-glogin" href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Login with Google</a>
+                              <a id="btn-gitlogin" href="{% url 'social:begin' 'github' %}" class="btn btn-primary">Login with Github</a>
                           </div>
                     </div>
                     <div class="form-group">

@@ -1,28 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<script>
-$("#subscribe").click(
-    function(){
-			console.log("Subscription added.");
-        this.val= '';
-    });
-</script>
-<div class="panel panel-success">
-    <div class="row">
-      <div class="content col-md-8">
-          <div class="panel-heading">
-              <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-            </div>
-    			   <div class="input-group">
-    	         <input type="email" class="form-control" placeholder="Enter your email">
-      	         <span class="input-group-btn">
-      	            <button class="btn btn-success" id = "subscribe" type="submit">Subscribe Now</button>
-      	         </span>
-            </div>
-  		  </div>
-        <div class="col-sm-4">
-          <img class="img-responsive" src="{% static 'img/chihuahua-dog.jpg'  %}" ,alt="logo">
+<div class="container">
+  	<div class="row">
+  		<br>
+  	</div>
+  	<div class="row" >
+  			<div class="col-md-1">
+  			</div>
+  			<div class="col-md-10" >
+              <div class="panel">
+                  <div class="row">
+                    <div class="content col-md-6">
+                        <div class="panel-heading">
+                            <h4>SUBSCRIBE TO OUR NEWSLETTER</h4>
+                          </div>
+                  			   <div class="input-group">
+                  	         <input type="email" class="form-control" placeholder="Enter your email">
+                    	         <span class="input-group-btn">
+                    	            <button class="btn btn-success" id = "subscribe" type="submit">Subscribe Now</button>
+                    	         </span>
+                          </div>
+                		  </div>
+                      <div class="col-sm-4">
+                        <img class="img-responsive" src="{% static 'img/chihuahua-dog.jpg'  %}" width="300" height="200",alt="logo">
+                      </div>
+                  </div>
+              </div>
+        </div>
+        <div class="col-md-1" >
         </div>
     </div>
 </div>

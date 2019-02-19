@@ -4,22 +4,24 @@
 			<div class="card h-100">
 			    <div class="card-body">
 						<div class="row">
-									<div class="col-3">
+									<div class="col-lg-4 col-sm-6 col-xs-12">
 										<img class  = "img-responsive" src = "{{MEDIA_URL}}/{{game.thumbnail}}" width="200" height="200" ,alt = "logo">
 									</div>
-                  <div class="col-6">
+									<div class="col-lg-4 col-sm-6 col-xs-12">
   							      <h4 class="card-title">{{game.name}}</h4>
   										<p class="card-text">Description:{{game.description}}</p>
   										<p class="card-text">Developed by:  {{game.developer.user.username}}</p>
                       <h4> Purchased {{game.purchase_number}}<h4>
                         <p> Game price: {{game.price}}$</p>
   								</div>
-                  <div class="col-3">
+									<div class="col-lg-4 col-sm-6 col-xs-12">
                     {% if user_has_bought_game or is_developers_game %}
                     <a href="/play/{{game.id}}" class="btn btn-primary" role="button">Play</a>
                     {% else %}
                     <a href="/payment/{{game.id}}" class="btn btn-primary" role="button">Buy for {{game.price}}$</a>
-                    {% endif %}
+										{% endif %}
+										<a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//demo-playme.herokuapp.com/{{game.id}}" target="_blank" class="btn btn-primary" role="button">Share on Facebook</a>
+										<a href="https://plus.google.com/share?url=http%3A//demo-playme.herokuapp.com/{{game.id}}" target="_blank" class="btn btn-primary" role="button">Share on Google+</a>
 									</div>
 						</div>
 			    </div>

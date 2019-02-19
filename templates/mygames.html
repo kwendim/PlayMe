@@ -2,26 +2,39 @@
 {% load static %}
 {% load static %}
 {% block content %}
-<div class="row text-center">
-		{% for tr in transactions %}
-			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4">
-					<div class="card h-100">
-					<img class="card-img-top img-responsive" src="{{MEDIA_URL}}/{{tr.game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
-					<div class="card-body">
-							<h4 class="card-title">{{tr.game.name}}</h4>
-							<p class="card-text">By {{tr.game.developer.user.username}}</p>
-					</div>
-					<div class="card-footer">
-						<p><a href="{% url 'play' tr.game.id %}" class="btn btn-primary" role="button">Play </a>
+<div class="container">
+	<div class="row">
+		<br>
+	</div>
+	<div class="row" >
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10" >
+				<div class="row text-center">
+						{% for tr in transactions %}
+							<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4">
+									<div class="card h-100">
+									<img class="card-img-top img-responsive" src="{{MEDIA_URL}}/{{tr.game.thumbnail}}", alt="logo" data-toggle="modal" data-target="#project1">
+									<div class="card-body">
+											<h4 class="card-title">{{tr.game.name}}</h4>
+											<p class="card-text">By {{tr.game.developer.user.username}}</p>
+									</div>
+									<div class="card-footer">
+										<p><a href="{% url 'play' tr.game.id %}" class="btn btn-primary" role="button">Play </a>
 
-						</div>
+										</div>
+								</div>
+							</div>
+						{% empty %}
+								<div class="text-center col">
+										<h4>You haven't purchased any game yet.<h4>
+								</div>
+						{% endfor %}
+
 				</div>
 			</div>
-		{% empty %}
-				<div class="text-center col">
-						<h4>You haven't purchased any game yet.<h4>
-				</div>
-		{% endfor %}
-
-</div>
+			<div class="col-md-1" >
+			</div>
+		</div>
+	</div>
 {% endblock %}
