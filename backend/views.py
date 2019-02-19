@@ -337,7 +337,10 @@ def get_item(query, key):
 
 def search(request):
 	input_text = request.GET.get('search-text', '')
-	games = Game.objects.filter(name__contains=input_text)
+	if input_text == '':
+		games = Game.objects.all()
+	else:
+		games = Game.objects.filter(name__contains=input_text)
 	return render(request, 'home.html', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
 
 def category(request):
