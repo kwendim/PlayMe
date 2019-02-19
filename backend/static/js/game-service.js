@@ -1,6 +1,6 @@
 function get_hostname(url) {
     var m = url.match(/^http:\/\/[^/]+/);
-    return m ? m[0] : null;
+    return m ? m[0] : url.match(/^https:\/\/[^/]+/);;
 }
 
 function send_error_msg(gameFrame, err) {
@@ -110,7 +110,7 @@ $(window).on('message', function(event) {
     var gameFrame = document.getElementById('game_frame')
     var gameDiv = document.getElementById('game_div')
     var origin = get_hostname(gameFrame.src);
-    if (origin == null || event.originalEvent.origin !== origin) {
+    if (origin == null || event.originalEvent.origin != origin) {
         send_error_msg(gameFrame, "Unknown origin");
         return;
     }

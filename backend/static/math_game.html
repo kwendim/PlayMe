@@ -34,7 +34,10 @@
       var msg = {
         "messageType": "SAVE",
         "gameState": {
-          "playerItems": playerItems,
+          "var1": var1,
+          "var2": var2,
+          "op": op,
+          "trials": trials,
           "score": parseFloat($("#score").text())
         }
       };
@@ -60,10 +63,15 @@
     // wants to send (displays them as an alert).
     window.addEventListener("message", function(evt) {
       if(evt.data.messageType === "LOAD") {
-        playerItems = evt.data.gameState.playerItems;
+        var1 = evt.data.gameState.var1;
+        var2 = evt.data.gameState.var2;
+        op = evt.data.gameState.op;
         points = evt.data.gameState.score;
+        trials = evt.data.gameState.trials;
         $("#score").text(points);
-        updateItems();
+        $("#trials").text(trials);
+        updateState();
+        //updateItems();
       } else if (evt.data.messageType === "ERROR") {
         alert(evt.data.info);
       }
@@ -76,6 +84,10 @@
     // Adds an item to the players inventory
     $("#answer").click( function () {
       var res = parseInt($("#result").val());
+      if (isNaN(parseFloat(res))) {
+        alert('Please enter an answer');
+        return;
+      }
       var correct = false;
       switch(op) {
         case '+':
@@ -116,19 +128,34 @@
     //
     // "Redraws" the inventory of the player. Used
     // when items are added or the game is loaded
-    function updateItems() {
+    function updateState() {
       $("#item_list").html("");
-      for (var i = playerItems.length - 1; i >= 0; i--) {
-        $("#item_list").append("<li>" + playerItems[i] + "</li>");
+      $("#item_list").append(
+            "<li>" + var1 + ' ' 
+            + op + ' ' 
+            + var2 + ' = '
+            +  "<input type=\"text\" id=\"result\" size=\"5\"></li>");
+
+      if (trials == 0) {
+          alert('Game over');
+          $("#answer").prop("disabled", true);
+          return;
       }
     }
+
+    //Return a random number between one and max
     function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+        var val = Math.floor(Math.random() * Math.floor(max));
+        if (val == 0.0)
+          ++val;
+        return val;
     }
     function getRandomOp() {
         var ops = ['+', '-', '*', '/'];
         return ops[getRandomInt(4)];
     }
+
+    // Initialize the game with random variables and operation
     function init() {
         var1 = getRandomInt(20);
         op = getRandomOp();
