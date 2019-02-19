@@ -58,7 +58,7 @@ def signup(request):
 		form = SignUpForm()
 	return render(request, 'registration/signup.html', {'form': form})
 
-def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
+def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -69,7 +69,7 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
         user.is_active = True
         user.profile.email_confirmed = True
         user.save()
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         games = Game.objects.all()
         return redirect('/', {'games': games, 'MEDIA_URL': settings.MEDIA_URL})
     else:
