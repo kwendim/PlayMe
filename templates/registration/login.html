@@ -1,40 +1,40 @@
 {% extends 'base.html' %}
-
-{% block title %}Play Me - Login{% endblock %}
-
+{% load static %}
 {% block content %}
-<body>
-  <div class="text-center">
-    <div class="container">
-      <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-info" >
-          <div class="panel-heading">
-              <div class="panel-title content ">Login</div>
-          </div>
-          <div style="padding-top:30px" class="panel-body" >
-              <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-              <form class="form-horizontal" method="post">
-                    <div style="margin-top:10px" class="form-group" >
-                          {% csrf_token %}
-                          {{ form.as_p }}
-                          <div class="col-sm-12 controls">
-                              <button type="submit" class="btn btn-primary">Login</button>
-                              <a id="btn-glogin" href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Login with Google</a>
-                              <a id="btn-gitlogin" href="{% url 'social:begin' 'github' %}" class="btn btn-primary">Login with Github</a>
-                          </div>
-                    </div>
-                    <div class="form-group">
-                          <div class="col-md-12 control">
-                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                Don't have an account!<a href="{% url 'signup' %}">  Sign Up Here </a>
-                            </div>
-                          </div>
-                    </div>
-              </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+
+                        <form class="form-horizontal" method="post">
+                              <div style="margin-top:10px" class="form-group text-center" >
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                        <button type="submit" class="btn btn-success btn-block">Login</button><br><p>Or</p>
+                                          <div class="row">
+                                              <div class="col-6">
+                                                  <a class="btn btn-outline-light btn-block mr-0" style= "background: black;" href="{% url 'social:begin' 'github' %}">
+                                                    <i class="fa fa-github"></i> Github
+                                                  </a>
+                                              </div>
+                                              <div class="col-6">
+                                                  <a class="btn btn-outline-light btn-block ml-0" style= "background: #dd4b39;" href="{% url 'social:begin' 'google-oauth2' %}">
+                                                    <i class="fa fa-google-plus"></i> Google Plus
+                                                  </a>
+                                              </div>
+                                          </div>
+                              </div>
+                              <div class="form-group">
+                                      <div style="border-top: 1px solid#888; padding-top:15px; font-size:85% " >
+                                          Don't have an account?<a href="{% url 'signup' %}">  Sign Up Here! </a>
+                                      </div>
+                              </div>
+                        </form>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              </div>
 {% endblock %}

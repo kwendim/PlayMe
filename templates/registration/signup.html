@@ -15,7 +15,7 @@
                           {{ field.label_tag }}<br>
                           {{ field }}
                           {% if field.help_text %}
-                            <small style="color: grey">{{ field.help_text }}</small>
+                            <br/><small style="color: grey">{{ field.help_text }}</small>
                           {% endif %}
                           {% for error in field.errors %}
                             <p style="color: red">{{ error }}</p>
@@ -23,8 +23,12 @@
                         </p>
                         {% endfor %}
                       <button type="submit" class="btn btn-success">Sign up</button>
-                      <a id="btn-glogin" href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Sign-up with Google</a>
-                      <a id="btn-glogin" href="{% url 'social:begin' 'github' %}" class="btn btn-primary">Sign-up with Github</a>
+                      <a class="btn btn-outline-light mr-0" style= "background: black;" href="{% url 'social:begin' 'github' %}">
+                        <i class="fa fa-github"></i> Github
+                      </a>
+                      <a class="btn btn-outline-light ml-0" style= "background: #dd4b39;" href="{% url 'social:begin' 'google-oauth2' %}">
+                        <i class="fa fa-google-plus"></i> Google Plus
+                      </a>
                   </form>
                 </div>
             </div>
