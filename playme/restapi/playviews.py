@@ -38,7 +38,7 @@ class ScoreViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ScoreSerializer
 
     def get_queryset(self):
-        high_scores = Score.objects.order_by('game','-current_score').distinct()
+        high_scores = Score.objects.order_by('game','-current_score').distinct('game')
         return high_scores
 
 
