@@ -9,3 +9,23 @@ class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
         )
 
 account_activation_token = AccountActivationTokenGenerator()
+
+
+ACTION = 'Action'
+ADVENTURE = 'Adventure'
+COMBAT = 'Combat'
+EDUCATIONAL = 'Educational'
+PUZZLE = 'Puzzle'
+RPG = 'RPG'
+SPORTS = 'Sports'
+STRATEGY = 'Strategy'
+GAME_CATEGORIES = (
+    (ACTION, 'Action'),
+    (ADVENTURE, 'Adventure'),
+    (COMBAT, 'Combat'),
+    (EDUCATIONAL, 'Educational'),
+    (PUZZLE, 'Puzzle'),
+    (RPG, 'RPG'),
+    (SPORTS, 'Sports'),
+    (STRATEGY, 'Strategy'),
+)

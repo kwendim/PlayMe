@@ -6,8 +6,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.shortcuts import reverse
+import backend.tokens as tokens
 
 # Create your models here.
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -34,25 +36,7 @@ class Game(models.Model):
     purchase_number = models.PositiveIntegerField(default=0, blank=True)
     developer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now, blank=True)
-    ACTION = 'AC'
-    ADVENTURE = 'AD'
-    COMBAT = 'CO'
-    EDUCATIONAL = 'EDU'
-    PUZZLE = 'PZ'
-    RPG = 'RPG'
-    SPORTS = 'SPR'
-    STRATEGY = 'STR'
-    GAME_CATEGORIES = (
-        (ACTION, 'Action'),
-        (ADVENTURE, 'Adventure'),
-        (COMBAT, 'Combat'),
-        (EDUCATIONAL, 'Educational'),
-        (PUZZLE, 'Puzzle'),
-        (RPG, 'RPG'),
-        (SPORTS, 'Sports'),
-        (STRATEGY, 'Strategy'),
-    )
-    category = models.CharField(max_length=20, choices=GAME_CATEGORIES)
+    category = models.CharField(max_length=20, choices=tokens.GAME_CATEGORIES)
     price = models.IntegerField(default=0, blank=True)
     thumbnail = models.ImageField(default='def.jpg', upload_to ='thumbnail', blank = True)
 
