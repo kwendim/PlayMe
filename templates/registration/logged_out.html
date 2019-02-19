@@ -3,7 +3,6 @@
 {% block title %}Play Me - Logged Out{% endblock %}
 
 {% block content %}
-<head>
   <script>
     function redirect(){
        window.location.href = "/";
@@ -11,8 +10,6 @@
 
     setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
 </script>
-</head>
-<body>
     <div class="container">
       <div class="row justify-content-center">
           <div style="padding-top:50px">
@@ -20,5 +17,4 @@
           </div>
       </div>
     </div>
-</body>
 {% endblock %}
