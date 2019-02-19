@@ -10,6 +10,7 @@ Web Software development project: PlayMe, an online game store for JavaScript ga
 
 ## Features
 
+
 ### General Features
 1. User registration and login
 2. View list of all games
