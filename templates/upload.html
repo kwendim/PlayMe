@@ -1,42 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h2 class="text-center">Upload</h2>
+          {% if upload_done %}
+            <strong>Thanks for uploading!</strong>
+            <a href="{% url 'developer_dashboard' %}">Return to My Uploads</a>
+            {% else %}
 
-<div class="panel panel">
-    <div class="panel-heading">
-      <div class="row">
-        <div class="col-md-10">
-          <h1 class="text-center">UPLOAD</h1>
+          {% if is_edit %}
+            <form action="/upload/edit/?&id={{game_id}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+          {% else %}
+            <form action="/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+          {% endif %}
+                  {% for field in form %}
+                    <p class="ml-2">
+                      {{ field.label_tag }}<br>
+                      {{ field }}
+                    </p>
+                    {% endfor %}
+                    <div class="form-group">
+    										<button class="btn btn-primary" type="submit">Save</button>
+    										{% if is_edit %}
+    										<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
+    										{% endif %}
+    										<a href="{% url 'developer_dashboard' %}" class="btn btn-default">Cancel</a>
+    								</div>
+              </form>
+          {% endif %}
         </div>
-      </div>
     </div>
-		 <div class="row">
-				<div class  = "col-md-3"></div>
-				<div class  = "col-md-6 text-left">
-							{% if upload_done %}
-						    <strong>Thanks for uploading!</strong>
-								<a href="{% url 'developer_dashboard' %}">Return to My Uploads</a>
-								{% else %}
-
-							{% if is_edit %}
-								<form action="/upload/edit/?&id={{game_id}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-							{% else %}
-								<form action="/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
-							{% endif %}
-								{{ form.as_p }}
-
-								<br>
-								<div class="form-group">
-										<button class="btn btn-primary" type="submit">Save</button>
-										{% if is_edit %}
-										<a href="/upload/delete/?&id={{game_id}}" class="btn btn-danger">Delete</a>
-										{% endif %}
-										<a href="{% url 'developer_dashboard' %}" class="btn btn-default">Cancel</a>
-								</div>
-						</form>
-					{% endif %}
-	      </div>
-				<div class  = "col-md-3"></div>
-			</div>
+  </div>
+</div>
 </div>
 {% endblock %}
